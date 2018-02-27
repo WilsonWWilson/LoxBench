@@ -10,9 +10,12 @@ async def echo(websocket, path):
 
 
 def main():
-    unpack("..\\LoxLIVE.upd")
+    comm = LoxComm("192.168.1.111", "80")
+    comm.connect((user, password))
+
+# TODO check certificates
+# TODO analyze UPD format
 
 
 if __name__ == "__main__":
-    comm = LoxComm("192.168.1.111", "80")
-    comm.connect((user, password))
+    main()

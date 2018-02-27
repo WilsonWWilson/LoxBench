@@ -5,7 +5,7 @@ import shutil
 from struct import unpack_from
 
 SECTOR_SIZE = 512
-LOXLIVE_IMG_MAGIC = 0xC2C101AC
+LIVE_IMG_MAGIC = 0xC2C101AC
 
 MAGIC1 = 0x9181A2B3
 MAGIC2 = 0x9181A2B4     # probably empty file
@@ -68,7 +68,7 @@ def prepare_output_directory(path):
 def extract_miniserver_image(f, version, crc, compr_size, raw_size, tmp):
     raw = f.read(compr_size)
     data = lzf.decompress(raw, raw_size) if raw_size > 0 else None
-    return "{:08d}_LoxLIVE.bin".format(version), data
+    return "{:08d}_LIVE.bin".format(version), data
 
 
 def extract_file(f):
