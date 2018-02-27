@@ -99,5 +99,5 @@ ENV/
 
 # mypy
 .mypy_cache/
-/src/secrets/credentials.py
+/src/secrets/*.py
 .idea/
