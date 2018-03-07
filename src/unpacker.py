@@ -117,3 +117,22 @@ def write_files(out_path, files):
         else:
             with open(path, "wb") as f:
                 f.write(data)
+
+
+def write_file(out_path, name, data):
+    path = os.path.join(out_path, *name.split("/"))
+
+    is_dir = "." not in os.path.basename(path)   # no file ext. in path
+    if is_dir:  # nothing to write, if it's just a directory
+        return
+
+    dir_name = path if is_dir else os.path.dirname(path)
+    os.makedirs(dir_name, exist_ok=True)
+
+    print("Creating '{}'".format(name))
+    if data is None:   # if there is no data, just create file
+        with open(path, 'a'):
+            os.utime(path, None)
+    else:
+        with open(path, "wb") as f:
+            f.write(data)
