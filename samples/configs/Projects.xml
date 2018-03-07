@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Projects>
+	<Project Name="DummyMiniserver_v9.3" U="1143a941-01d4-0c49-ffff615fc32b25d2" MsName="DummyMiniserver_v9.3" MsAddr="" MsSerial="504F94000000" File="D:\Users\Me\Documents\Loxone\Loxone Config\Projects\DummyMiniserver_v9.3.Loxone" FileName="DummyMiniserver_v9.3" PDir="D:\Users\Me\Documents\Loxone\Loxone Config\Projects\" Cust="" CustAddr="" LastC="07-03-2018 09:38:17" Version="9030128" MsType="0"/>
+	<Project Name="DummyMiniserver_v9.3" U="1143a941-01d4-0c49-ffff615fc32b25d2" MsName="DummyMiniserver_v9.3" MsAddr="" MsSerial="504F94000000" File="D:\Users\Me\Documents\Loxone\Loxone Config\Projects\Test.Loxone" FileName="Test" PDir="D:\Users\Me\Documents\Loxone\Loxone Config\Projects\" Cust="" CustAddr="" LastC="07-03-2018 09:37:12" Version="9030128" MsType="1"/>
+	<Project Name="MyGo" U="0a8c7351-03b3-1d1e-ffff112233445566" MsName="Loxone Miniserver" MsAddr="192.168.1.111" MsSerial="504F941014C9" File="C:\Users\Me\Nextcloud\MyGo.Loxone" FileName="MyGo" PDir="C:\Users\Me\Nextcloud\" Cust="" CustAddr="4232 Hagenberg" LastC="25-02-2018 20:11:00" Version="9030128" MsType="1"/>
+	<Project Name="Test" U="11203f18-00d5-0c49-ffffa4c8d1876674" MsName="Test" MsAddr="" MsSerial="504F94000000" File="D:\Users\Me\Downloads\Loxone\Test_new_enc.Loxone" FileName="Test_new_enc" PDir="D:\Users\Me\Downloads\Loxone\" Cust="" CustAddr="4232 Hagenberg" LastC="13-02-2018 18:23:38" Version="9030128" MsType="1"/>
+</Projects>
