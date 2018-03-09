@@ -1,10 +1,10 @@
 import os
-import lzf
+import lzf  # TODO maybe use pythons integrated lzma module
 import math
 import shutil
 from struct import unpack_from
 
-SECTOR_SIZE = 512
+BLOCK_SIZE = 512
 LIVE_IMG_MAGIC = 0xC2C101AC
 
 MAGIC1 = 0x9181A2B3
@@ -30,16 +30,16 @@ def unpack(file):
             file_size = os.path.getsize(file)
             header_size = 4 * 7
             raw = f.read(header_size)
-            magic, size, *header = unpack_from("I" * 7, raw)
+            magic, size, *header = unpack_from("I" * 7, raw)     # size is the number of blocks and NOT bytes!
             print("First magic: {:02X}/ size: {}".format(magic, size))
             if magic == LIVE_IMG_MAGIC:  # extract mini server data
-                f.seek(SECTOR_SIZE)  # skip remaining part of sector
+                f.seek(BLOCK_SIZE)  # skip remaining part of sector
                 print("MS: size:{} vs file_size: {}".format(size, file_size))
                 ms_data = extract_miniserver_image(f, *header)
                 files.append(ms_data)
 
                 # jump to start of first file after the ms image
-                pos = (size + 1) * SECTOR_SIZE
+                pos = (size + 1) * BLOCK_SIZE
                 f.seek(pos)
             else:
                 print("len? {} vs {}".format(magic, file_size))

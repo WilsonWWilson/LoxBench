@@ -1,0 +1,1 @@
+updatecheck_url = "http://update.loxone.com/updatecheck.xml"

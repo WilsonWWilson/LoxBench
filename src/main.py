@@ -1,6 +1,6 @@
 from comm import LoxComm
 from secrets.credentials import host, user, password
-from UpdateAnalyzer import unpacker
+from update_analyzer import unpacker
 
 
 async def echo(websocket, path):
@@ -9,9 +9,9 @@ async def echo(websocket, path):
 
 
 def main():
-    unpacker.unpack('../samples/upd/09030225_Miniserver.upd')
-    # comm = LoxComm(host, "80")
-    # comm.connect((user, password))
+    # unpacker.unpack('../samples/upd/09030225_Miniserver.upd')
+    comm = LoxComm(host)
+    comm.connect((user, password))
 
 # TODO check certificates
 # TODO analyze UPD format
