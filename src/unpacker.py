@@ -19,7 +19,6 @@ def unpack(file):
     """
 
     out_path = os.path.abspath(os.curdir).replace("src", "out")
-
     prepare_output_directory(out_path)
 
     try:
@@ -34,7 +33,8 @@ def unpack(file):
 
             # extract miniserver data
             ms_data = extract_miniserver_image(f, *header)
-            files.append(ms_data)
+            # files.append(ms_data)
+            write_file(out_path, *ms_data)
 
             # jump to start of first file after the ms image
             pos = (size + 1) * SECTOR_SIZE
@@ -102,21 +102,22 @@ def get_zero_terminated_str(raw):
 
 def write_files(out_path, files):
     for name, data in files:
-        path = os.path.join(out_path, *name.split("/"))
-
-        is_dir = "." not in os.path.basename(path)   # no file ext. in path
-        dir_name = path if is_dir else os.path.dirname(path)
-        os.makedirs(dir_name, exist_ok=True)
-
-        if is_dir:  # nothing to write, if it's just a directory
-            continue
-
-        if data is None:   # if there is no data, just create file
-            with open(path, 'a'):
-                os.utime(path, None)
-        else:
-            with open(path, "wb") as f:
-                f.write(data)
+        write_file(out_path, name, data)
+        # path = os.path.join(out_path, *name.split("/"))
+        #
+        # is_dir = "." not in os.path.basename(path)   # no file ext. in path
+        # dir_name = path if is_dir else os.path.dirname(path)
+        # os.makedirs(dir_name, exist_ok=True)
+        #
+        # if is_dir:  # nothing to write, if it's just a directory
+        #     continue
+        #
+        # if data is None:   # if there is no data, just create file
+        #     with open(path, 'a'):
+        #         os.utime(path, None)
+        # else:
+        #     with open(path, "wb") as f:
+        #         f.write(data)
 
 
 def write_file(out_path, name, data):
