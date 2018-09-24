@@ -33,15 +33,14 @@ class Permission:
 
 
 class LoxComm:
-    def __init__(self, ip, port):
-        self._ip = ip
-        self._port = port
+    def __init__(self, host):
+        self._host = host
         self._token = None
         self._request_queue = asyncio.Queue()
 
     @staticmethod
-    def lox_get(ip, cmd, full_response=False):
-        r = requests.get('http://{}/{}'.format(ip, cmd))
+    def lox_get(host, cmd, full_response=False):
+        r = requests.get('http://{}/{}'.format(host, cmd))
         res = r.json()['LL']
         if full_response:
             return res['Code'], res['value'], res['control']        # can't unify it with parsing of socket response, because there the 'code' is lowercase
@@ -49,7 +48,7 @@ class LoxComm:
             return res['value']
 
     async def _get_public_key(self):
-        pub_key_pem = self.lox_get(self._ip, CMD.GET_PUBLIC_KEY)
+        pub_key_pem = self.lox_get(self._host, CMD.GET_PUBLIC_KEY)
         # format return by the Miniserver is not a valid PEM format:
         pub_key_pem = re.sub(r'^(-+BEGIN.*?-+)(\w)', r'\1\n\2', pub_key_pem)        # BEGIN and END must be on separate lines
         pub_key_pem = re.sub(r'(\w)(-+END.*?-+)', r'\1\n\2', pub_key_pem)
@@ -104,7 +103,7 @@ class LoxComm:
 
         # TODO test what happens if info is not URLencoded
         # TODO play around with UUID
-        cmd = CMD.GET_TOKEN.format(hash=cred_hash, user=user, permission=Permission.WEB, uuid="0a8c7351-00ac-1e18-ffff112233445566", info="Hugin")
+        cmd = CMD.GET_TOKEN.format(hash=cred_hash, user=user, permission=Permission.WEB, uuid="0a8c7351-00ac-1e18-ffff112233445566", info="LoxBench")
         await ws.send(cmd)
         code, token, _ = await self._get_ws_response(ws, True)
         if code == 200:
@@ -119,8 +118,7 @@ class LoxComm:
 
     async def lox_comm(self, credentials):
         session_key = await self._authenticate()
-        # authenticate("192.168.1.111", )
-        async with websockets.connect('ws://{}:{}/ws/rfc6455'.format(self._ip, self._port)) as ws:
+        async with websockets.connect('ws://{}/ws/rfc6455'.format(self._host)) as ws:
             await ws.send(CMD.EXCHANGE_KEY.format(session_key))
             res = await self._get_ws_response(ws)       # TODO what to do with the session key?
             if self._token:
