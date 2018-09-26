@@ -1,0 +1,146 @@
+demominiserver.loxone.com:7779
+CacheBuster successfully loaded Webinterface
+cacheBuster.js:1:153
+App -> Miniserver: jdev/cfg/apiKey
+Miniserver -> App: {"LL":{"control":"dev/cfg/apiKey","value":"{'snr': 'EE:E0:00:A8:00:4A', 'version':'9.3.2.20', 'key':'32413742453530363146394434344644333146423234393631324533344543323738423841453231'}","Code":"200"}}
+App -> Miniserver (enc): jdev/sys/getkey2/web
+App -> Miniserver: jdev/sys/fenc/pGOly+8m8Gcj2EveGP1HK74SYCYrJIXJh53zcetn+Rk=?sk=lz8YMHFNSx6yQztu9wXCYG5DTBvFp7/n9zmZRB2oqgaRegq7muUcWWu5ZIAnZRiNBUb9J7iVNp7C1ue0usdTuI5yU+aEwq87+T+NnQHWEfOi3xnCwSAeVyZ0XhL4VPID05+hLf7pKDSVO5vPXPlnkSr1eXpT1EwllqPX81E2NSw=
+Miniserver -> App: "n64WTH7/VOxxZ8iPU/6a9Vtq+B0t6KeUVaYhxCk05nDmZjuh4/RFHmntwxKQ/B8DAjafN6pys9MRO3x2IBWGHrtr+MZWMGqZD67vWMH1OfYVmitqa8rKxM/1yPtrzk5yIt9CFV0mk5T//ewXQLpC+1+dzKu0DRX+/gIM78M09WUMGmZG58wqH1uC5wgGFT9yCTnV9Qbp2iveg6WNqpJ2AAZJi074C+E+LDchrRSEFv/WI4iUscCdKoogYHtpLX1Yp6quZ09FDg5TC5hr6qU+Om3D8Hw/bXkVGnspDHzIiuiQYSa3D44mf2jfFEgWkA/4"
+Miniserver -> App (enc): {"LL":{"control":"dev/sys/getkey2/web","code":200,"value":{"key":"44394433344636373039364239394342393932464233393633383442373733313146343941354237","salt":"31303761303130362D303235342D323564352D66666666623634626663346332383562"}}}
+App -> Miniserver (enc): jdev/sys/gettoken/20c7da2a423a1a548e06f485b563b7d82dcbde9a/web/2/Webinterface / Linux x86_64  Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0/479e900a-2365-49ad-b7b6-c5e082b4fe2f
+App -> Miniserver: jdev/sys/fenc/F1N/Pz3jTq49W8B3ShcrWZZpueyg9ERkyg2oEIKRS7iWSR+H6G34oAMuFlVBY4Hrz5GljE9Y5GTZPL7WhyitGoxO4YgpU2aZwl/QhIZ/8CIWpyH7dnPdSVR3mL0+ilpZvPpThWGo2Vv7JMIpICP2KOQZeXyv9/QUw/stOH4ulXNET9jSSrV6c9oY+czxEnOW8vmsWx5pYjqwbqY+DlyqEj5kN4IpIEO2cLv0tXRuTfn1GkdNfg65mhEyy7fZAHP9/RDNE6Ox4B04+S6VWir0yX0TMrpWmaETBcliV7t3w/8=?sk=rDD0yyGR5XmwBkCRVo/WTR2wHI3dF0Fxn16JlMCmBKwNQ5haJHL9+nEVEylQfOSwn1igSfW7++6xfkm3ssFcgU2mA1098Qq8KAja5w6lz9fSaJqgB0NYgWyRD/Ri9J+GbxHij+5WtqvnmteS/3mF+B9uS0UH5CkHr6Wr4iJMqro=
+Miniserver -> App: "s/yAjbg2TAFobS3QgJs6chUa3ZnH/woS7AkfcC72mggM8kFZOIqFeSpTfSTjIuyfvBgtkzfkg5DsjZXXQ7VXcE2p4xjHa91sQQRwG7Z9aBxImLFpMJceH3FrYInnBHR8W/AkfqQLfk+qAnS5EzjktSaDiBpNjuZIfWBPKab96+iOCtcBZCNMv1RdCTt8FUFGIZ2xBNQ4+r/OcDqAwefqvRIVtNGLVnCmMpq55DTpGX0begePxRwoyILL5MuO3aRkU5JYyhA2YUmuxrMfFoReyApGdUkUEuKx2LUiFAi9pKZO6Q+3oNj0tVSNXU2JHF0JLiPkKiZ4byPxXqdJrOPZnNB4617/3WpALntrTwInQwRlwbZKiS3v72mDSFF8T118XeEz0N6L+I2AqaAuXFBtTDHiP1HiyyV1kkG3y3RFSl0OGSjLkUchfGTZ1mc6pA8//czK+t+KjVqwiGLQRhCoZumz/m5Ylc04bPUlCa52lFLW8kC5C5QMELjyS582/DpZejIEj9xj41vm5uB7WQZrTfaWMXo7LcjiyknBpYfpOI/0VnvF+qTkGTSBHgS/G5YC+aHFRv1hvqnVmCSPRNMACg=="
+Miniserver -> App (enc): {"LL":{"control":"dev/sys/gettoken/7226a3e16580c5bfc1074587be5e0fa0d043c2dc/web/2/Webinterface / Linux x86_64  Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0/ddd5fc8c-e0d4-4798-a037-65e9f14e688e","value":{"token":"D50F87679767894D0DDF072780F0B49454B4B333","key":"31304136374142444344374633343534364443363235364138464346423435374131324331383645","validUntil":289917058,"tokenRights":1026,"unsecurePass":false},"code":"200"}}
+The Components object is deprecated. It will soon be removed.
+scripts.js:1
+Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user’s experience. For more help http://xhr.spec.whatwg.org/
+vendor.js:13:14341
+11:30:04.905: Not Found
+11:30:05.959: Reachability: setNetworkStatus: LAN/WLAN
+11:30:06.019: saved successfully the LoxSettings.json
+11:30:07.315: # RootViewController enableAnimations true
+11:30:07.331: -- DebugScreen start --
+11:30:08.019: disableAnimationsTemp
+11:30:08.020: # RootViewController enableAnimations false
+11:30:08.040: CommunicationComp: StopMSSession
+11:30:08.041: WebSocketExt: closing the connection
+11:30:08.043: DLSocket: closing the connection
+11:30:08.046: Reachability: stopReachabilityDetection
+11:30:08.048: ConnectionManager: _resetCloudDnsStuff
+11:30:08.050: TokenHandler reset
+11:30:08.051: TokenHandler _stopAllKeepAlives
+11:30:08.055: CommunicationComp: StartMSSession
+11:30:08.056: ConnectionManager: connectToMiniserver: undefined
+11:30:08.062: ConnectionManager: _startReachModeCheck
+11:30:08.063: Reachability: detectReachability
+11:30:08.064: Reachability: setNetworkStatus: LAN/WLAN
+11:30:08.065: Reachability: _sendRequests, OOS:undefined
+11:30:08.067:     timeout is 0.5s
+11:30:08.068: Reachability: _sendRequest http://demominiserver.loxone.com:7779/jdev/cfg/api
+11:30:08.431: Reachability: received remote response
+11:30:08.432: Reachability: _isConfigVersionSupported: true
+11:30:08.433: ConnectionManager: _receivedReachMode: remote, version: 9.3.2.20, mac: EEE000A8004A
+11:30:08.437: ConnectionManager: _openNewSocket reachModeDidChange: true, encrypted: true url: demominiserver.loxone.com:7779
+11:30:08.441: WebSocketExt: try to open WebSocket to host: demominiserver.loxone.com:7779
+11:30:08.442: Detecting protocol.. http: --> ws://
+11:30:08.896: WebSocketExt:  wsOpened
+11:30:08.897:  -> request public key
+11:30:08.898: sendViaHttpUnauthorized: demominiserver.loxone.com:7779 command: jdev/sys/getPublicKey
+11:30:09.147:  - success:
+11:30:09.148: success
+11:30:09.149: {"LL": { "control": "dev/sys/getPublicKey", "value": "-----BEGIN CERTIFICATE-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTEBiUtYNiGlrRZm184J5buRR/MYPNMR0eIPfOseIskiJkvDqXQ75YlU+3M6/zEAy1IVunc5yPoVFMESg4C+mCXrtLnJxTuSucEmpGMgycoDCZio/maOKHRJQtoTAYQJ1C55N2OmFDAy5nHDfpQX1wDo79o1TZo7xa+mrWRBOjHQIDAQAB-----END CERTIFICATE-----", "Code": "200"}}
+11:30:09.188: WebSocketExt: App -> Miniserver jdev/sys/keyexchange/q4PXtAMtje6E39a1/HJAOzbegPm2Dab7RHJGfXsPHzuOAh/Z2RABhyxIfryggtPK6quUtzNJhzG1oYtSKwEgVjRkb74yB3C2r3h1qg28O7zw2rsUN0WjMUsCa7apPwTNM4uTZkKbVAf9O/yc/ACMrb1+hjQ1Y3NQfDBWoL1hlTo=
+11:30:09.449: WebSocketExt: Miniserver -> App: {"LL": { "control": "jdev/sys/keyexchange/q4PXtAMtje6E39a1/HJAOzbegPm2Dab7RHJGfXsPHzuOAh/Z2RABhyxIfryggtPK6quUtzNJhzG1oYtSKwEgVjRkb74yB3C2r3h1qg28O7zw2rsUN0WjMUsCa7apPwTNM4uTZkKbVAf9O/yc/ACMrb1+hjQ1Y3NQfDBWoL1hlTo=", "value": "dFqK3lQNhKK43qurZYOno2nG2JVi7t4yRVey05eXKzKB5agreZC+E/tTj4fv3mm6ePGScS7fR8tHXf5et3dsdsIG1hQrR9wM2vkbCyvYmhA=", "Code": "200"}}
+11:30:09.453: WebSocketExt:  Authenticate with a token 2
+11:30:09.454: SocketExt authenticate with token
+11:30:09.458: WebSocketExt: App -> Miniserver jdev/sys/fenc/iKspoqi3pbI2zc8lmexPuVmeo7ej8SJ5cGtmP0N5soj3jVX08maFqFvilCp4EWC5oz5iiIbGdF9oTnT4uwEv058EuFqbuFfgBBilte52cPU%3D
+11:30:09.630: WebSocketExt: Miniserver -> App: 83S73gldJBU6Nd2zn+kd6uma33pWbUSddPlNQ2+1D3N+j93tZclJRfeVRy/wSP0a8T4cyd2F9M7jAJFyz1KOOoG431hWR6uBchkAkDVyQe3pshPUgs3m1k7tqq+MWRxn3BX8sBfcW9F5ZIs8k1p0tV/alxEl1+m9LggfrIUm0xN9J2GNvYcWatpOf8EFBL75ctNlDQUtvNfteHJWuoX3qtODdcQLyqyrhgui+etgyZM=
+11:30:09.633: SocketExt authenticate with token successful!
+11:30:09.634: TokenHandler _storeTokenObj: usr=web, perm=UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:09.635: TokenHandler keepPermissionTokenAlive: UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:09.636: TokenHandler getToken: permission UNDEFINED, WEB, EXPERT_MODE_LIGHT for undefined
+11:30:09.637:        token found: true
+11:30:09.638: TokenHandler _stopKeepAlive: UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:09.643: TokenHandler     expires: Invalid date
+11:30:09.644: TokenHandler     refresh in 00 s
+11:30:09.645: TokenHandler _startKeepAlive: UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:09.646: WebSocketExt: authenticate successful!
+11:30:09.647: CommunicationComp: ConnEstablished
+11:30:09.651: WebSocketExt: App -> Miniserver jdev/sys/enc/YdgNZB%2By0VoI9fmaVRM2ru7xsxqMUFDVevwHmrLpNSdhSaD5iqpmJsGO1x%2FsQln7
+11:30:09.780: WebSocketExt: Miniserver -> App: {"LL": { "control": "jdev/sys/enc/YdgNZB+y0VoI9fmaVRM2ru7xsxqMUFDVevwHmrLpNSdhSaD5iqpmJsGO1x/sQln7", "value": "2018-03-09 23:30:38", "Code": "200"}}
+11:30:09.782: WebSocketExt: App -> Miniserver jdev/sys/enc/HBCZE%2BGETN3YQcLlusldK4m2kEjjdjuxWD%2B4zgeDW8XTS4%2FQ5N9YR7oNASkCKKHb
+11:30:09.783: WebSocketExt: pending requests: 1
+11:30:09.786: undefined    couldn't load structure from filesystem, download it
+11:30:09.786: Download structure from MS
+11:30:09.787: sendViaHTTP (encType: undefined): data/LoxAPP3.json
+11:30:09.788:  - use HTTP
+11:30:09.789: sendViaHttpUnauthorized: undefined command: jdev/sys/getkey
+11:30:09.982: WebSocketExt: Miniserver -> App: {"LL": { "control": "jdev/sys/enc/HBCZE+GETN3YQcLlusldK4m2kEjjdjuxWD+4zgeDW8XTS4/Q5N9YR7oNASkCKKHb", "value": "+01:00:00", "Code": "200"}}
+11:30:09.984: WebSocketExt: App -> Miniserver jdev/sys/enc/YdgNZB%2By0VoI9fmaVRM2rvjzvk1RHCzQwn9Gu6J22Mc%3D
+11:30:09.985: WebSocketExt: pending requests: 0
+11:30:09.988:  - success:
+11:30:09.988: success
+11:30:09.989: {"LL": { "control": "dev/sys/getkey", "value": "33384237383546314246464634363344464143373530383836313441393639363935384646313533", "Code": "200"}}
+11:30:09.991:  - got key
+11:30:10.001:  - authenticate using token: data/LoxAPP3.json?autht=5ac858db778eaceccef6909c8f205b59058b8dfa
+11:30:10.002: LoxAPP3.json download progress: 1
+11:30:10.041: sendViaHttpUnauthorized: null command: jdev/sys/enc/kQeuk6oYV5IfHz%2FlPWNOKTly%2FYQctsjymW9aBD6ue5gimSYEVQASxX7LksGN%2BnwMefummCm%2BIE%2FEG%2BxLPn5oOzPQZRp5WpTk5LOhO5uZXZInWwNMiKhuV5AmJSio%2F9ld?sk=FSd1Wp%2BQSwRuM15n1wWBI2jVtQitDRpajPVHd8Dfeoa%2B5h14ZgB2TtKerYQ6V%2BegkGWLVay%2FDP3xf%2FNU054T7z%2Fbxox5cNoRWsWNwJ6OJAKge%2FaT6pF0K9mNp7bnv%2Bs7MzDeb2U6I0dz7qmXpSb%2FtNmawvalRt5o48%2FLSsQaHyI%3D
+11:30:10.081: ERROR in Q promise!
+11:30:10.082: saveSettings/<@http://demominiserver.loxone.com:7779/scripts/scripts1.js?v=9.3%20(2018.02.20):12:23514
+_fulfilled@http://demominiserver.loxone.com:7779/scripts/vendor.js?v=9.3%20(2018.02.20):220:13239
+Promise.prototype.then/</<@http://demominiserver.loxone.com:7779/scripts/vendor.js?v=9.3%20(2018.02.20):220:13730
+Promise/promise.promiseDispatch@http://demominiserver.loxone.com:7779/scripts/vendor.js?v=9.3%20(2018.02.20):220:5038
+become/</<@http://demominiserver.loxone.com:7779/scripts/vendor.js?v=9.3%20(2018.02.20):220:2845
+flush@http://demominiserver.loxone.com:7779/scripts/vendor.js?v=9.3%20(2018.02.20):220:10017
+nextTick</channel.port1.onmessage@http://demominiserver.loxone.com:7779/scripts/vendor.js?v=9.3%20(2018.02.20):220:10824
+11:30:10.158: WebSocketExt: Miniserver -> App: {"LL": { "control": "jdev/sys/enc/YdgNZB+y0VoI9fmaVRM2rvjzvk1RHCzQwn9Gu6J22Mc=", "value": "2018-03-10 11:31:19", "Code": "200"}}
+11:30:11.092: TokenHandler _sendTokenCommand: jdev/sys/refreshtoken/%s/%s
+11:30:11.094: WebSocketExt: App -> Miniserver jdev/sys/fenc/YdgNZB%2By0VoI9fmaVRM2rumfvi2P1%2F8tRJIXbg8CAeg%3D
+11:30:11.211: WebSocketExt: Miniserver -> App: S06bDWQe06QNKiv5X+LtYyUZRKmsCZgSHtXKzgnkzuYqFpERUW2l1xKT0K+FQ8YX9b5k8HFykwz9a+wfp+VMRMqEX74lpIzd9cyyVUunxHNIKG2377bHNqX1kx44PjIHafuvjzqlsAdLZuXBFWrYil9fEbzZebqgFDfg3JVk+IJoOcusQOiXvjI5mwFkcDQcNHKlM01v0UMBqZuWTbdRsw==
+11:30:11.230: WebSocketExt: App -> Miniserver jdev/sys/fenc/YdgNZB%2By0VoI9fmaVRM2rndDM47JNDDMHzv2jtvnJs6A67SPztJOGBNfohiQ0e5LLiEdid4OKq1sWlNsmT4TY%2FUJaDRy2GI00RY6Ti8Q6qI%3D
+11:30:11.236:  - success:
+11:30:11.239: success
+11:30:11.246: {"lastModified":"2018-03-09 23:30:38","msInfo":{"serialNr":"EEE000A8004A","msName":"Test Miniserver","projectName":"Testovací miniserver","localUrl":"10.7.7.249","remoteUrl":"dns.loxonecloud.com/EEE000A8004A","tempUnit":0,"currency":"€","squareMeasure":"m²","location":"Kollerschlag","languageCode":"CSY","heatPeriodStart":"10-01","heatPeriodEnd":"04-30","coolPeriodStart":"05-01","coolPeriodEnd":"09-30","catTitle":"Kategorie","roomTitle":"Místnost","miniserverType":0,"currentUser":{"name":"web","uuid":"107a0101-013a-c4c7-ffffc926a26a8d21","isAdmin":false,"changePassword":false,"userRights":1030}},"globalStates":{"operatingMode":"10412616-0192-0742-ffffc926a26a8d21","sunrise":"10412616-0192-0754-ffffc926a26a8d21","sunset":"10412616-0192-0757-ffffc926a26a8d21","pastTasks":"10412616-0210-099e-ffffb423ee388785","plannedTasks":"10412616-0210-099d-ffffb423ee388785","notifications":"10412616-0192-0712-ffffc926a26a8d21","modifications":"10412616-0192-0714-ffffc926a26a8d21","favColorSequences":"1…
+11:30:11.257: LoxAPP3.json download progress: 1
+11:30:11.260: LoxAPP3.json download progress: 1
+11:30:11.446: WebSocketExt: Miniserver -> App: 83S73gldJBU6Nd2zn+kd6qo3bilTQSviee/36ehN2QCL4XfUmdAQSyc5JRJe7lh6Aw0ImeYdffRv/IYcHLWLG8j/hGNs8bMAgXCEPQ8lPLOB3QmxKVr1lFsn2sjZ26mfSWrcjalItWu81jFyBlr41RHGsqPnhRkcbsAQVTquSqZZH8ij6Ht6mkXSYVFNsJbi8gQ4q3s2ah1l4Vz4t6+J7g==
+11:30:11.450: TokenHandler    TokenCommand succeeded! jdev/sys/refreshtoken/%s/%s
+11:30:11.453: TokenHandler     expires: March 10, 2018 1:31 PM
+11:30:11.454: TokenHandler     refresh in 40 min 23 s
+11:30:11.455: TokenHandler _startKeepAlive: UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:12.096: set animation back
+11:30:12.097:    to variable true
+11:30:12.098: # RootViewController enableAnimations true
+11:30:28.484: saved successfully the LoxSettings.json
+11:30:28.486: saved successfully the LoxArchive.json
+11:30:28.487: saved successfully the LoxSettings.json
+11:30:31.202: CommunicationComp: StructureReady
+11:30:31.243: WebSocketExt: App -> Miniserver jdev/sys/enc/YdgNZB%2By0VoI9fmaVRM2rkBA6SLcbw4oW0C0G1kLl2s%3D
+11:30:31.261: saved successfully the structure of EEE000A8004A_web_remote.json
+11:30:31.264: disableAnimationsTemp
+11:30:31.265: # RootViewController enableAnimations false
+11:30:31.267: already connected to this Miniserver, only navigate
+11:30:31.409: WebSocketExt: Miniserver -> App: {"LL": { "control": "jdev/sys/enc/YdgNZB+y0VoI9fmaVRM2rkBA6SLcbw4oW0C0G1kLl2s=", "value": "", "Code": "200"}}
+11:30:31.412: WebSocketExt: App -> Miniserver jdev/sys/enc/YdgNZB%2By0VoI9fmaVRM2riPg7k3DAhcPnMAs85LjMLu6Z1lA0k2yYHLk%2BeoucBQS
+11:30:31.413: WebSocketExt: pending requests: 0
+11:30:31.581: WebSocketExt: Miniserver -> App: {"LL": { "control": "dev/sps/enablebinstatusupdate", "value": "1", "Code": "200"}}
+11:30:32.459: IntercomStateContainer (Ovládání dveří) prepareStates: {"1079e231-0145-ebdd-ffffbc159faf27b8":0,"1079e231-0145-ebde-ffffbc159faf27b8":0,"1079e231-0145-ebd8-ffffbc159faf27b8":{"uuid":"1079e231-0145-ebd8-ffffbc159faf27b8","uuidIcon":"00000000-0000-0000-0000000000000000","text":""},"1079e231-0145-ebd9-ffffbc159faf27b8":{"uuid":"1079e231-0145-ebd9-ffffbc159faf27b8","uuidIcon":"00000000-0000-0000-0000000000000000","text":"/51"}}
+11:30:32.579: DLSocket: try to open WebSocket to host: demominiserver.loxone.com:7779
+11:30:32.579: Detecting protocol.. http: --> ws://
+11:30:32.605: Initial message not an API-Message!
+11:30:33.038: DLSocket:  wsOpened
+11:30:33.300: set animation back
+11:30:33.301:    to variable true
+11:30:33.301: # RootViewController enableAnimations true
+11:30:33.382: DLSocket:  Authenticate with a token 2
+11:30:33.383: SocketExt authenticate with token
+11:30:33.587: SocketExt authenticate with token successful!
+11:30:33.588: TokenHandler _storeTokenObj: usr=web, perm=UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:33.588: TokenHandler keepPermissionTokenAlive: UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:33.589: TokenHandler getToken: permission UNDEFINED, WEB, EXPERT_MODE_LIGHT for undefined
+11:30:33.589:        token found: true
+11:30:33.590: TokenHandler _stopKeepAlive: UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:33.591: TokenHandler     expires: March 10, 2018 1:31 PM
+11:30:33.592: TokenHandler     refresh in 40 min 23 s
+11:30:33.592: TokenHandler _startKeepAlive: UNDEFINED, WEB, EXPERT_MODE_LIGHT
+11:30:33.593: DLSocket: authenticate successful!
