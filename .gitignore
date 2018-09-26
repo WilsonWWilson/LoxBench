@@ -102,3 +102,6 @@ ENV/
 /src/secrets/*.py
 .idea/
 /out/
+/samples/configs/*
+/samples/upd/*
+/samples/UpdateCheck/*

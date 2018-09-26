@@ -11,15 +11,14 @@ MAGIC1 = 0x9181A2B3
 MAGIC2 = 0x9181A2B4     # probably empty file
 
 
-def unpack(file):
+def unpack(file, dest_dir=None):
     """
     UPD file starts with a header of 7 UINTS: magic, size (how many sectors)
     version, checksum, compressed_size, expanded_size, tmp
     the first part is the Miniserver update image
     """
-
-    out_path = os.path.abspath(os.curdir).replace("src", "out")
-
+    if dest_dir is None:
+        out_path = os.path.abspath(os.curdir).replace("src", "out")
     prepare_output_directory(out_path)
 
     files = []

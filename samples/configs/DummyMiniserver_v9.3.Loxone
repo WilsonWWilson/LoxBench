@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ControlList Version="148" LxAV="15" NextObj="1" NextConst="1" NextNote="1" NextMem="1">
-	<C Type="Document" V="122" U="1143a941-01d4-0c49-ffff615fc32b25d2" Title="DummyMiniserver_v9.3" ConfigVersion="9030128" PaperFormat="2" SPSfreq="100" OpenIsHigh="false" Date="2018-03-07 09:37:56" CDate="" BDate="" DateS="289647476" Street="" Town="" Ctry="" Latitude="48.3669" Longitude="14.5172" Creator="Author" Tel="+43 7287 7070-0" EMail="support@loxone.com" Web="www.loxone.com" Logo="" uuidNotifications="1143a941-01d4-0c47-ffff615fc32b25d2" uuidFavSeq="00000000-0000-0000-0000000000000000" uuidFavCol="00000000-0000-0000-0000000000000000" FC="hsv(25,96,50);hsv(24,95,80);hsv(337,94,50)" uuidTime="1143a941-01d4-0c48-ffff615fc32b25d2" Currency="€" UpdTime="120" CrashL="true" NumO="319">
+	<C Type="Document" V="122" U="1143a941-01d4-0c49-ffff615fc32b25d2" Title="DummyMiniserver_v9.3" ConfigVersion="9030326" PaperFormat="2" SPSfreq="100" OpenIsHigh="false" Date="2018-04-06 22:26:22" CDate="" BDate="" DateS="292285582" Street="" Town="" Ctry="" Latitude="48.3669" Longitude="14.5172" Creator="Author" Tel="+43 7287 7070-0" EMail="support@loxone.com" Web="www.loxone.com" Logo="" uuidNotifications="1143a941-01d4-0c47-ffff615fc32b25d2" uuidFavSeq="116bec6a-02c9-3182-ffff6ed151c7b375" uuidFavCol="116bec6a-02c9-3183-ffff6ed151c7b375" FC="hsv(25,96,50);hsv(24,95,80);hsv(337,94,50)" uuidTime="1143a941-01d4-0c48-ffff615fc32b25d2" Currency="€" UpdTime="120" CrashL="true" NumO="321">
 		<C Type="LoxCaption" V="122" U="1143a941-01d4-0c4b-ffff615fc32b25d2" Title="Icons" Cl="0,0,0" WF="16384" CaptionType="5">
 			<C Type="IconCaptionState" V="122" U="1143a941-01d4-0c4d-ffff615fc32b25d2" Title="Status Symbols" WF="16384">
 				<C Type="IconState" V="122" U="00000000-0000-0001-2200000000000000" Title="Not Assigned" WF="16384"/>
@@ -196,9 +196,13 @@
 				<HP H="6084D1910E7D6E37FC54D5E1E9E761C3AC4913CC4E2112426876FB18120D9D6719089AF5CE82627DD2EE718989BDCFA0" S="31313433613964362D303066632D306563392D66666666303161663134306136623663"/>
 				<HP H="E0C898137CD6C5FCD1309CB353105A5E77AD78ACE88C706538548722782BAAF880EB978D91AC0F56540CDE192B8208B1" S="31313433613964362D303066642D306563612D66666666303161663134306136623663"/>
 			</C>
+			<C Type="User" Desc="Pass_is_TopS3cr3t!" V="122" U="116bec77-02b8-38b2-ffff615fc32b25d2" Title="Dummy" WF="16384" LastEdit="0" AppGroup="0" UsR="1062" UsRnA="1024" iBtnArr="" CodeArr="" NFCArr="" NFCNArr="">
+				<HP H="AFA0A82A4EF1B667E219CC00D420F065E84017FE5E264B77DB641107D5FF06E4148FB9A08FE692A14AA40B113BFDFEE2" S="31313662656338372D303330622D343162622D66666666316465363166653163353530"/>
+				<HP H="" S=""/>
+			</C>
 		</C>
 		<C Type="UserGroupCaption" V="122" U="1143a941-01d4-0c59-ffff615fc32b25d2" Title="User Groups" WF="16384">
-			<C Type="UserGroup" V="122" U="1143a941-020a-0e0e-ffff615fc32b25d2" Title="Administrators" WF="16384" Rights="-1" UgType="1" UserModes="3" N="10" Modes="00000000-0000-0001-1500000000000000,00000000-0000-0002-1500000000000000,00000000-0000-0003-1500000000000000,00000000-0000-0004-1500000000000000,00000000-0000-0005-1500000000000000,00000000-0000-0006-1500000000000000,00000000-0000-0007-1500000000000000,00000000-0000-0008-1500000000000000,00000000-0000-0009-1500000000000000,00000000-0000-000a-1500000000000000">
+			<C Type="UserGroup" V="122" U="1143a941-020a-0e0e-ffff615fc32b25d2" Title="Administrators" WF="16384" Rights="-1" UgType="1" N="10" Modes="00000000-0000-0001-1500000000000000,00000000-0000-0002-1500000000000000,00000000-0000-0003-1500000000000000,00000000-0000-0004-1500000000000000,00000000-0000-0005-1500000000000000,00000000-0000-0006-1500000000000000,00000000-0000-0007-1500000000000000,00000000-0000-0008-1500000000000000,00000000-0000-0009-1500000000000000,00000000-0000-000a-1500000000000000">
 				<Entry To="1440" V="1"/>
 				<Entry To="1440" Ix="1" V="1"/>
 				<Entry To="1440" Ix="2" V="1"/>
@@ -211,7 +215,7 @@
 				<Entry To="1440" Ix="9" V="1"/>
 				<C Type="RefUser" V="122" U="1143a941-020a-0e10-ffff615fc32b25d2" Title="landlord" Cl="0,0,0" Ref="1143a941-020a-0e0b-ffff615fc32b25d2" WF="16384"/>
 			</C>
-			<C Type="UserGroup" V="122" U="1143a941-020a-0e12-ffff615fc32b25d2" Title="User" WF="16384" Rights="129" UserModes="3" N="10" Modes="00000000-0000-0001-1500000000000000,00000000-0000-0002-1500000000000000,00000000-0000-0003-1500000000000000,00000000-0000-0004-1500000000000000,00000000-0000-0005-1500000000000000,00000000-0000-0006-1500000000000000,00000000-0000-0007-1500000000000000,00000000-0000-0008-1500000000000000,00000000-0000-0009-1500000000000000,00000000-0000-000a-1500000000000000">
+			<C Type="UserGroup" V="122" U="1143a941-020a-0e12-ffff615fc32b25d2" Title="User" WF="16384" Rights="129" N="10" Modes="00000000-0000-0001-1500000000000000,00000000-0000-0002-1500000000000000,00000000-0000-0003-1500000000000000,00000000-0000-0004-1500000000000000,00000000-0000-0005-1500000000000000,00000000-0000-0006-1500000000000000,00000000-0000-0007-1500000000000000,00000000-0000-0008-1500000000000000,00000000-0000-0009-1500000000000000,00000000-0000-000a-1500000000000000">
 				<Entry To="1440" V="1"/>
 				<Entry To="1440" Ix="1" V="1"/>
 				<Entry To="1440" Ix="2" V="1"/>
@@ -223,7 +227,7 @@
 				<Entry To="1440" Ix="8" V="1"/>
 				<Entry To="1440" Ix="9" V="1"/>
 			</C>
-			<C Type="UserGroup" V="122" U="1143a941-020a-0e14-ffff615fc32b25d2" Title="All" WF="16384" Rights="129" UgType="2" UserModes="3" N="10" Modes="00000000-0000-0001-1500000000000000,00000000-0000-0002-1500000000000000,00000000-0000-0003-1500000000000000,00000000-0000-0004-1500000000000000,00000000-0000-0005-1500000000000000,00000000-0000-0006-1500000000000000,00000000-0000-0007-1500000000000000,00000000-0000-0008-1500000000000000,00000000-0000-0009-1500000000000000,00000000-0000-000a-1500000000000000">
+			<C Type="UserGroup" V="122" U="1143a941-020a-0e14-ffff615fc32b25d2" Title="All" WF="16384" Rights="129" UgType="2" N="10" Modes="00000000-0000-0001-1500000000000000,00000000-0000-0002-1500000000000000,00000000-0000-0003-1500000000000000,00000000-0000-0004-1500000000000000,00000000-0000-0005-1500000000000000,00000000-0000-0006-1500000000000000,00000000-0000-0007-1500000000000000,00000000-0000-0008-1500000000000000,00000000-0000-0009-1500000000000000,00000000-0000-000a-1500000000000000">
 				<Entry To="1440" V="1"/>
 				<Entry To="1440" Ix="1" V="1"/>
 				<Entry To="1440" Ix="2" V="1"/>
@@ -236,8 +240,9 @@
 				<Entry To="1440" Ix="9" V="1"/>
 				<C Type="RefUser" V="122" U="1143a941-020a-0e16-ffff615fc32b25d2" Title="landlord" Cl="0,0,0" Ref="1143a941-020a-0e0b-ffff615fc32b25d2" WF="16384"/>
 				<C Type="RefUser" V="122" U="1143a9b8-0307-0ec8-ffff615fc32b25d2" Title="Tenant" Cl="0,0,0" Ref="1143a9b8-0307-0ec6-ffff615fc32b25d2" WF="16384"/>
+				<C Type="RefUser" V="122" U="116bec77-02b8-38b4-ffff615fc32b25d2" Title="Dummy" Cl="0,0,0" Ref="116bec77-02b8-38b2-ffff615fc32b25d2" WF="16384"/>
 			</C>
-			<C Type="UserGroup" V="122" U="1143a941-020a-0e18-ffff615fc32b25d2" Title="Nobody" WF="16384" UgType="3" UserModes="3" N="10" Modes="00000000-0000-0001-1500000000000000,00000000-0000-0002-1500000000000000,00000000-0000-0003-1500000000000000,00000000-0000-0004-1500000000000000,00000000-0000-0005-1500000000000000,00000000-0000-0006-1500000000000000,00000000-0000-0007-1500000000000000,00000000-0000-0008-1500000000000000,00000000-0000-0009-1500000000000000,00000000-0000-000a-1500000000000000">
+			<C Type="UserGroup" V="122" U="1143a941-020a-0e18-ffff615fc32b25d2" Title="Nobody" WF="16384" UgType="3" N="10" Modes="00000000-0000-0001-1500000000000000,00000000-0000-0002-1500000000000000,00000000-0000-0003-1500000000000000,00000000-0000-0004-1500000000000000,00000000-0000-0005-1500000000000000,00000000-0000-0006-1500000000000000,00000000-0000-0007-1500000000000000,00000000-0000-0008-1500000000000000,00000000-0000-0009-1500000000000000,00000000-0000-000a-1500000000000000">
 				<Entry To="1440" V="1"/>
 				<Entry To="1440" Ix="1" V="1"/>
 				<Entry To="1440" Ix="2" V="1"/>
@@ -465,7 +470,7 @@
 				<Co K="Q" U="1143a941-01e4-0cbe-ffff615fc32b25d2"/>
 			</C>
 		</C>
-		<C Type="WeatherServer" V="122" U="1143a9f6-01f3-0f3e-ffff615fc32b25d2" Title="Weather Server " Cl="0,0,0" SType="0" Address="http://weather.loxone.com:6066" VisuUUID="11430000-01f3-0f3c-ffff01af140a6b6c" SpStates="1143a9f6-01f3-0f3d-ffff01af140a6b6c">
+		<C Type="WeatherServer" V="122" U="1143a9f6-01f3-0f3e-ffff615fc32b25d2" Title="Weather Server " Cl="0,0,0" WF="16384" SType="0" Address="http://weather.loxone.com:6066" VisuUUID="11430000-01f3-0f3c-ffff01af140a6b6c" SpStates="1143a9f6-01f3-0f3d-ffff01af140a6b6c">
 			<IoData Visu="true" Ugr="1143a941-020a-0e14-ffff615fc32b25d2" Ugx="1143a941-020a-0e14-ffff615fc32b25d2"/>
 			<C Type="WeatherData" IName="WDC34" V="122" U="1143a9f6-01f3-0f41-ffff615fc32b25d2" Title="Sunshine" Nio="1" WF="16384" WType="34" SLs="600" SLw="120">
 				<Co K="AQ" U="1143a9f6-01f3-0f40-ffff01af140a6b6c"/>
@@ -513,7 +518,7 @@
 				<IoData Cr="1143a941-01fa-0d67-ffff615fc32b25d2" Pr="1143a941-020a-0e1e-ffff615fc32b25d2" Ugr="1143a941-020a-0e14-ffff615fc32b25d2" Ugx="1143a941-020a-0e14-ffff615fc32b25d2"/>
 			</C>
 		</C>
-		<C Type="LoxCaption" V="122" U="1143a941-020a-0e1a-ffff615fc32b25d2" Title="Network Devices" Cl="0,0,0" CaptionType="6">
+		<C Type="LoxCaption" V="122" U="1143a941-020a-0e1a-ffff615fc32b25d2" Title="Network Devices" Cl="0,0,0" WF="16384" CaptionType="6">
 			<C Type="IntercomDevice" V="122" U="1143aa9a-0242-2c8f-ffff615fc32b25d2" Title="Server" Cl="0,0,0" WF="16384" Lx="true" ProxyPort="8700" IntVideoUrl="" ExtVideoUrl="http://clouddns:8090/mjpg/video.mjpg" IntAlertImage="" VideoUser="CamUser" VideoPwd="587BE41B86D976844A8B1BECD4BD56D7" IntAudioHost="" ExtAudioHost="" IntAudioUser="AudioUser" ExtAudioUser="" UdpPort="8112" AudioPwd="0DAB8F5BAFB89CF7D5CD3095BADDBE67">
 				<IoData Visu="true" Cr="1143a941-01e4-0d01-ffff615fc32b25d2" Pr="1143a941-0219-0eb8-ffff615fc32b25d2"/>
 				<C Type="LoxDeviceCaption" V="122" U="1143aa9a-0252-2c91-ffff615fc32b25d2" Title="1-Wire Device" WF="16384" Poll="0"/>
@@ -565,8 +570,8 @@
 				</C>
 			</C>
 		</C>
-		<C Type="GlobalStates" V="122" U="1143a941-01e4-0ccd-ffff615fc32b25d2" Cl="0,0,0" WF="4096" SpStates="1143a941-01e4-0cca-ffff615fc32b25d2,1143a941-01e4-0ccb-ffff615fc32b25d2,1143a941-01e4-0ccc-ffff615fc32b25d2"/>
-		<C Type="Devicemonitor" V="122" U="1143a941-01e4-0cc8-ffff615fc32b25d2" Title="Device Monitor" Cl="0,0,0" WF="4096" SpStates="1143a941-01e4-0cc7-ffff615fc32b25d2">
+		<C Type="GlobalStates" V="122" U="1143a941-01e4-0ccd-ffff615fc32b25d2" Title="noname 1143a941-01e4-0ccd-ffff615fc32b25d2" Cl="0,0,0" WF="20480" SpStates="1143a941-01e4-0cca-ffff615fc32b25d2,1143a941-01e4-0ccb-ffff615fc32b25d2,1143a941-01e4-0ccc-ffff615fc32b25d2"/>
+		<C Type="Devicemonitor" V="122" U="1143a941-01e4-0cc8-ffff615fc32b25d2" Title="Device Monitor" Cl="0,0,0" WF="20480" SpStates="1143a941-01e4-0cc7-ffff615fc32b25d2">
 			<IoData Visu="true" Ugr="1143a941-020a-0e14-ffff615fc32b25d2" Ugx="1143a941-020a-0e14-ffff615fc32b25d2"/>
 		</C>
 		<C Type="AutoPilot" V="122" U="1143a941-01e4-0cc5-ffff615fc32b25d2" Title="Autopilots" Cl="0,0,0" Nio="2" WF="20480" SpStates="1143a941-01e4-0cc1-ffff615fc32b25d2,1143a941-01e4-0cc2-ffff615fc32b25d2" config="">
@@ -575,7 +580,7 @@
 		</C>
 		<C Type="LoxLIVE" V="122" U="1143a9f6-01e0-0ecc-ffff615fc32b25d2" Title="DummyMiniserver_v9.3" WF="16384" CycleUserProt="-1" Serial="504F94000000" Installation="" SwitchBoard="Cabinet" SwitchBoardRow="1" SwitchBoardPos="1" ExtAddr="dns.loxonecloud.com" IntAddr="" Pause="10" RxTimeout="1000" BaseID="-1">
 			<IoData Pr="1143a941-020a-0e1e-ffff615fc32b25d2"/>
-			<C Type="InputCaption" V="122" U="1143a9f6-01e2-0ece-ffff615fc32b25d2" Title="Digital inputs" WF="16384">
+			<C Type="InputCaption" V="122" U="1143a9f6-01e2-0ece-ffff615fc32b25d2" Title="Digital Inputs" WF="16384">
 				<C Type="DigitalIn" IName="I1" V="122" U="1143a9f6-01e9-0ef1-ffff615fc32b25d2" Title="Input 1" Nio="1" WF="16385" MinTime="10">
 					<Co K="Q" U="1143a9f6-01e9-0ef0-ffff01af140a6b6c"/>
 					<IoData Cr="1143a941-01e4-0cd1-ffff615fc32b25d2" Pr="1143a941-020a-0e1e-ffff615fc32b25d2" Ugr="1143a941-020a-0e14-ffff615fc32b25d2" Ugx="1143a941-020a-0e14-ffff615fc32b25d2"/>
@@ -617,7 +622,7 @@
 					<Display Unit="&lt;v&gt;" StateOnly="true"/>
 				</C>
 			</C>
-			<C Type="AnalogInputCaption" V="122" U="1143a9f6-01e2-0ed0-ffff615fc32b25d2" Title="Analogue inputs" WF="16384">
+			<C Type="AnalogInputCaption" V="122" U="1143a9f6-01e2-0ed0-ffff615fc32b25d2" Title="Analogue Inputs" WF="16384">
 				<C Type="VoltageIn" IName="AI1" V="122" U="1143a9f6-01eb-0f0a-ffff615fc32b25d2" Title="Voltage 1" Nio="2" WF="16385" Analog="true" SourceValHigh="10" DestValHigh="10" MaxVal="10" MinChange="0.25" MinTime="1000" AverageTime="1">
 					<Co K="AQ" U="1143a9f6-01eb-0f08-ffff01af140a6b6c"/>
 					<Co K="Q" U="1143a9f6-01eb-0f09-ffff01af140a6b6c"/>
@@ -643,7 +648,7 @@
 					<Display Type="2" Unit="&lt;v.1&gt;" StateOnly="true"/>
 				</C>
 			</C>
-			<C Type="OutputCaption" V="122" U="1143a9f6-01e2-0ed2-ffff615fc32b25d2" Title="Digital outputs" WF="16384">
+			<C Type="OutputCaption" V="122" U="1143a9f6-01e2-0ed2-ffff615fc32b25d2" Title="Digital Outputs" WF="16384">
 				<C Type="Actor" IName="Q1" V="122" U="1143a9f6-01ec-0f19-ffff615fc32b25d2" Title="Actuator (Relay) 1" Nio="1" WF="16385">
 					<Co K="I" U="1143a9f6-01ec-0f18-ffff01af140a6b6c"/>
 					<IoData Cr="1143a941-01e4-0cd1-ffff615fc32b25d2" Pr="1143a941-020a-0e1e-ffff615fc32b25d2" Ugr="1143a941-020a-0e14-ffff615fc32b25d2" Ugx="1143a941-020a-0e14-ffff615fc32b25d2"/>
@@ -685,7 +690,7 @@
 					<Display Unit="&lt;v.1&gt;" StateOnly="true"/>
 				</C>
 			</C>
-			<C Type="AnalogOutputCaption" V="122" U="1143a9f6-01e3-0ed4-ffff615fc32b25d2" Title="Analogue outputs" WF="16384">
+			<C Type="AnalogOutputCaption" V="122" U="1143a9f6-01e3-0ed4-ffff615fc32b25d2" Title="Analogue Outputs" WF="16384">
 				<C Type="VoltageOut" IName="AQ1" V="122" U="1143a9f6-01ef-0f31-ffff615fc32b25d2" Title="Voltage 1" Nio="1" WF="16385" Channel="1" SourceValHigh="10" DestValHigh="10">
 					<Co K="I" U="1143a9f6-01ef-0f30-ffff01af140a6b6c"/>
 					<IoData Cr="1143a941-01e4-0cd1-ffff615fc32b25d2" Pr="1143a941-020a-0e1e-ffff615fc32b25d2" Ugr="1143a941-020a-0e14-ffff615fc32b25d2" Ugx="1143a941-020a-0e14-ffff615fc32b25d2"/>
@@ -707,7 +712,7 @@
 					<Display Unit="&lt;v.1&gt;" StateOnly="true"/>
 				</C>
 			</C>
-			<C Type="WeatherCaption" V="122" U="1143a9f6-01e4-0ee4-ffff615fc32b25d2" Title="Miniserver Communication"/>
+			<C Type="WeatherCaption" V="122" U="1143a9f6-01e4-0ee4-ffff615fc32b25d2" Title="Miniserver Communication" WF="16384"/>
 			<C Type="EIBline" V="122" U="1143a9f6-01e3-0ed6-ffff615fc32b25d2" Title="KNX/EIB Line" WF="16384" CycleUserProt="-1" Serial="00000000" Installation="" SwitchBoard="Cabinet" SwitchBoardRow="1" SwitchBoardPos="1" IntAddr="" Pause="10" RxTimeout="1000" BaseID="-1" EibAddr="1.1.250 14/">
 				<IoData></IoData>
 				<C Type="EIBsensorCaption" V="122" U="1143a9f6-01e3-0ed8-ffff615fc32b25d2" Title="Sensors" WF="16384"/>
@@ -716,7 +721,7 @@
 			<C Type="VirtualInCaption" V="122" U="1143a9f6-01e4-0edc-ffff615fc32b25d2" Title="Virtual Inputs" WF="16384"/>
 			<C Type="VirtualOutCaption" V="122" U="1143a9f6-01e4-0ede-ffff615fc32b25d2" Title="Virtual Outputs" WF="16384"/>
 			<C Type="TaskCaption" V="122" U="1143a9f6-01e4-0ee2-ffff615fc32b25d2" Title="Recorded Tasks" Cl="0,0,0" WF="16384" gT="1143a9f6-01e4-0ee1-ffff01af140a6b6c" pT="1143a9f6-01e4-0ee0-ffff01af140a6b6c"/>
-			<C Type="LoxCaption" V="122" U="1143a9f6-01e9-0eee-ffff615fc32b25d2" Title="SD Card" Cl="0,0,0" CaptionType="4"/>
+			<C Type="LoxCaption" V="122" U="1143a9f6-01e9-0eee-ffff615fc32b25d2" Title="SD Card" Cl="0,0,0" WF="16384" CaptionType="4"/>
 			<C Type="LoggerOutCaption" V="122" U="1143a9f6-01e4-0ee6-ffff615fc32b25d2" Title="Messages" WF="16384">
 				<C Type="Logger" V="122" U="1143a9f6-01e5-0ee8-ffff615fc32b25d2" Title="Default Logger" WF="16384" Address="/log/user.log" Std="true"/>
 				<C Type="Notification" V="122" U="1143a9f6-01e5-0eea-ffff615fc32b25d2" Title="System Notifications" WF="16384" Entries="10" Sys="true">
