@@ -32,6 +32,7 @@ CONFIG_COMMANDS = {
     "get_device_name":      	{"cmd": "dev/cfg/device", "auth_req": True, "descr": "Miniserver Gerätenamen holen", "admin_only": True},
     "get_dns1":             	{"cmd": "dev/cfg/dns1", "auth_req": True, "descr": "DNS-Adresse 1 holen", "admin_only": True},
     "get_dns2":             	{"cmd": "dev/cfg/dns2", "auth_req": True, "descr": "DNS-Adresse 2 holen", "admin_only": True},
+    "get_mtu":                  {"cmd": "dev/cfg/mtu", "auth_req": True},
     "get_ntp":              	{"cmd": "dev/cfg/ntp", "auth_req": True, "descr": "NTP-Adresse holen", "admin_only": True},
     "get_timezone_offset":  	{"cmd": "dev/cfg/timezoneoffset", "auth_req": True, "descr": "Zeitzonenoffset holen", "admin_only": False},
     "get_http_port":        	{"cmd": "dev/cfg/http", "auth_req": True, "descr": "HTTP-Port holen", "admin_only": True},
@@ -39,6 +40,10 @@ CONFIG_COMMANDS = {
     "get_town":                 {"cmd": "dev/cfg/town", "auth_req": True},
     "get_config_port":          {"cmd": "dev/cfg/LoxPLAN", "auth_req": True, "descr": "Konfigurationssoftware-Port holen", "admin_only": True},
     "get_only_local_config":    {"cmd": "dev/cfg/ftllocalonly", "auth_req": True, "descr": "‚FTP, Telnet, Softwarezugriff nur lokal erlauben‘ holen", "admin_only": True},
+    "get_language":             {"cmd": "dev/cfg/getlanguage", "auth_req": True},
+    "set_language":             {"cmd": "dev/cfg/setlanguage/{}", "auth_req": True},
+    "loxone":                   {"cmd": "dev/cfg/loxone", "auth_req": True},                    # TODO determine purpose
+    "logserver":                         {"cmd": "dev/cfg/logserver", "auth_req": True},        # TODO determine purpose
 }
 
 
@@ -69,6 +74,31 @@ FS_COMMANDS = {
     "rm_file": {"cmd": "dev/fsdel/{}", "auth_req": True, "descr": "deletes a file", "ad/min_only": True, "not_safe": True}
 }
 
+
+GATEWAY_COMMANDS = {
+    "gw_estimate_stats":            {"cmd": "dev/gw/estimatestats"},
+    "gw_get_custom":                {"cmd": "dev/gw/getcustom"},
+    "gw_get_device_state":          {"cmd": "dev/gw/getdevicestate"},
+    "gw_get_device_state_fast":     {"cmd": "dev/gw/getdevicestatefast"},
+    "gw_get_device_monitor_data":   {"cmd": "dev/gw/getdevicemonitordata"},
+    "gw_get_file":                  {"cmd": "dev/gw/getfile"},
+    "gw_get_file_parts":            {"cmd": "dev/gw/getfilepart"},
+    "gw_get_file_size":             {"cmd": "dev/gw/getfilesize"},
+    "gw_get_json_stats":            {"cmd": "dev/gw/getjsonstats"},
+    "gw_get_jstats_list":           {"cmd": "dev/gw/getjstatslist"},
+    "gw_get_jstats_for_app":        {"cmd": "dev/gw/getjstatslistforapp"},
+    "gw_get_stats":                 {"cmd": "dev/gw/getstats"},
+    "gw_get_statslist":             {"cmd": "dev/gw/getstatslist"},
+    "gw_get_statslist_for_app":     {"cmd": "dev/gw/getstatslistforapp"},
+    "gw_get_tree":                  {"cmd": "dev/gw/gettree"},
+    "gw_get_jvirtual_in_out":       {"cmd": "dev/gw/jvirtualinout"},
+    "gw_get_virtual_in_out":        {"cmd": "dev/gw/virtualinout"},
+    "gw_get_structure_patch":       {"cmd": "dev/gw/getstructurepatch"},
+    "gw_get_xml_stats":             {"cmd": "dev/gw/getxmlstats"},
+    "gw_get_sys_info":              {"cmd": "dev/gw/getsysinfo"},
+}
+
+
 LAN_COMMANDS = {
     "get_num_sent_pkts": {"cmd": "dev/lan/txp", "descr": "Anzahl LAN gesendete Pakete holen", "admin_only": True, "auth_req": True},
     "get_num_sent_pkts_error": {"cmd": "dev/lan/txe", "descr": "Anzahl LAN gesendete Pakete mit Fehler holen", "admin_only": True, "auth_req": True},
@@ -93,15 +123,18 @@ PLC_COMMANDS = {
 6 – PLC change
 7 – PLC error
 8 – Update is occuring"""},
-    "get_sps_clock": {"cmd": "dev/sps/status", "auth_req": True, "descr": "aktuelle PLC Frequenz abfragen", "admin_only": False},
-    "restart_sps": {"cmd": "dev/sps/restart", "auth_req": True, "descr": "PLC neu starten", "admin_only": True, "not_safe": True},
-    "stop_sps": {"cmd": "dev/sps/stop", "auth_req": True, "descr": "PLC anhalten", "admin_only": True, "not_safe": True},
-    "resume_sps": {"cmd": "dev/sps/run", "auth_req": True, "descr": "PLC fortsetzen", "admin_only": True},
-    "enable_logging": {"cmd": "dev/sps/log", "auth_req": True, "descr": "PLC globales Logging erlauben", "admin_only": True},
-    "list_devices": {"cmd": "dev/sps/enumdev", "auth_req": True, "descr": "alle Geräte der PLC auflisten (Miniserver,Extensions,…)", "admin_only": True},
-    "list_inputs": {"cmd": "dev/sps/enumin", "auth_req": True, "descr": "alle Eingänge der PLC auflisten", "admin_only": True},
-    "list_outputs": {"cmd": "dev/sps/enumout", "auth_req": True, "descr": "alle Ausgänge der PLC auflisten", "admin_only": True},
-    "identify_ms": {"cmd": "dev/sps/identify", "auth_req": True, "descr": "Miniserver identifizieren für Erweiterungen muss die Seriennummer als Parameter mitgegeben werden.", "admin_only": True}
+    "get_sps_clock":        {"cmd": "dev/sps/status", "auth_req": True, "descr": "aktuelle PLC Frequenz abfragen", "admin_only": False},
+    "restart_sps":          {"cmd": "dev/sps/restart", "auth_req": True, "descr": "PLC neu starten", "admin_only": True, "not_safe": True},
+    "stop_sps":             {"cmd": "dev/sps/stop", "auth_req": True, "descr": "PLC anhalten", "admin_only": True, "not_safe": True},
+    "resume_sps":           {"cmd": "dev/sps/run", "auth_req": True, "descr": "PLC fortsetzen", "admin_only": True},
+    "enable_logging":       {"cmd": "dev/sps/log", "auth_req": True, "descr": "PLC globales Logging erlauben", "admin_only": True},
+    "list_devices":         {"cmd": "dev/sps/enumdev", "auth_req": True, "descr": "alle Geräte der PLC auflisten (Miniserver,Extensions,…)", "admin_only": True},
+    "list_inputs":          {"cmd": "dev/sps/enumin", "auth_req": True, "descr": "alle Eingänge der PLC auflisten", "admin_only": True},
+    "list_outputs":         {"cmd": "dev/sps/enumout", "auth_req": True, "descr": "alle Ausgänge der PLC auflisten", "admin_only": True},
+    "identify_ms":          {"cmd": "dev/sps/identify", "auth_req": True, "descr": "Miniserver identifizieren für Erweiterungen muss die Seriennummer als Parameter mitgegeben werden.", "admin_only": True},
+    "air_get_learned":      {"cmd": "dev/sps/airgetlearned", "auth_req": True},
+    "air_learn":            {"cmd": "dev/sps/airlearn", "auth_req": True},
+    "air_set_ip":           {"cmd": "dev/sps/airsetip", "auth_req": True},
 }
 
 
