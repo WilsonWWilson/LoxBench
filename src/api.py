@@ -1,28 +1,30 @@
 
+GET_DYNDNS_IP_URL = "http://dns.loxonecloud.com/?getip&snr={}"
+
+
 APP_COMMANDS = {
     # "get_structure": {"cmd": "/data/LoxAPP3.json", "descr": "Strukturdatei für die Visualisierung", "auth_req": True, "admin_only": False},       # can't decode JSON
-    "get_appversion": {"cmd": "dev/sps/LoxAPPversion3", "auth_req": True},        # diff with data/LoxAPP3.json?
     "enable_status_updates": {"cmd": "dev/sps/enablebinstatusupdate", "auth_req": True},
     "list_commands": {"cmd": "dec/sps/listcmds", "descr": "list commands recorded via the app", "auth_req": True}
 }
 
 
 BUS_COMMANDS = {
-    "bus_pkts_tx":      {"cmd": "dev/bus/packetssent", "descr": "Anzahl gesendete Pakete am Loxone-Link holen", "admin_only": True, "auth_req": True},
-    "bus_pkts_rx":      {"cmd": "dev/bus/packetsreceived", "descr": "Anzahl empfangene Pakete am Loxone-Link holen", "admin_only": True, "auth_req": True},
-    "bus_rx_err":       {"cmd": "dev/bus/receiveerrors", "descr": "Anzahl Empfangsfehler am Loxone-Link holen", "admin_only": True, "auth_req": True},
     "bus_frame_err":    {"cmd": "dev/bus/frameerrors", "descr": "Anzahl Frame-Fehler am Loxone-Link holen", "admin_only": True, "auth_req": True},
     "bus_overruns":     {"cmd": "dev/bus/overruns", "descr": "Anzahl Überlauffehler am Loxone-Link holen", "admin_only": True, "auth_req": True},
+    "bus_pkts_rx":      {"cmd": "dev/bus/packetsreceived", "descr": "Anzahl empfangene Pakete am Loxone-Link holen", "admin_only": True, "auth_req": True},
+    "bus_pkts_tx":      {"cmd": "dev/bus/packetssent", "descr": "Anzahl gesendete Pakete am Loxone-Link holen", "admin_only": True, "auth_req": True},
     "bus_parity_err":   {"cmd": "dev/bus/parityerrors", "descr": "Anzahl Paritätsfehler am Loxone-Link holen", "admin_only": True, "auth_req": True},
+    "bus_rx_err":       {"cmd": "dev/bus/receiveerrors", "descr": "Anzahl Empfangsfehler am Loxone-Link holen", "admin_only": True, "auth_req": True},
 }
 
 
 CONFIG_COMMANDS = {
-    "get_update_level":         {"cmd": "dev/cfg/updatelevel", "min_vers": "9.0", "descr": "", "auth_req": True},         # interacts with updatecheck.xml?
     "get_api":              	{"cmd": "dev/cfg/api", "descr": ""},
     "get_apikey":           	{"cmd": "dev/cfg/apikey", "descr": ""},
-    "get_mac":              	{"cmd": "dev/cfg/mac", "descr": "MAC-Adresse holen", "admin_only": False},
-    "get_firmware_version": 	{"cmd": "dev/cfg/version", "descr": "Firmware Version holen", "admin_only": False, "auth_req": True},
+    "get_mac":              	{"cmd": "dev/cfg/mac", "descr": "Retrieve mac (separated by ':')", "admin_only": False},
+    "get_firmware_version_dot": {"cmd": "dev/cfg/version", "descr": "Get firmware version (dotted notation)", "admin_only": False, "auth_req": True},
+    "get_firmware_version": 	{"cmd": "dev/sys/version", "descr": "Get firmware version (no separator)", "admin_only": False, "auth_req": True},
     "get_firmware_date":    	{"cmd": "dev/cfg/versiondate", "descr": "Erstellungsdatum der Firmware holen", "admin_only": False, "auth_req": True},
     "set_settings":         	{"cmd": "dev/cfg/settings", "auth_req": True},
     "get_dhcp":             	{"cmd": "dev/cfg/dhcp", "auth_req": True, "descr": "DHCP Konfiguration holen", "admin_only": True},
@@ -44,27 +46,64 @@ CONFIG_COMMANDS = {
     "set_language":             {"cmd": "dev/cfg/setlanguage/{}", "auth_req": True},
     "loxone":                   {"cmd": "dev/cfg/loxone", "auth_req": True},                    # TODO determine purpose
     "logserver":                         {"cmd": "dev/cfg/logserver", "auth_req": True},        # TODO determine purpose
+    "get_update_level":         {"cmd": "dev/cfg/updatelevel", "min_vers": "9.0", "descr": "", "auth_req": True},         # interacts with updatecheck.xml?
 }
 
 
 DEBUG_COMMANDS = {
-    "dbg_config": 			{"cmd": "debug/config", "auth_req": True},
-    "dbg_cycle": 			{"cmd": "debug/cycle", "auth_req": True},
-    "dbg_free": 			{"cmd": "debug/free", "auth_req": True},
-    "dbg_fs": 		    	{"cmd": "debug/fs", "auth_req": True},
-    "dbg_inmem": 			{"cmd": "debug/inmem", "auth_req": True},
-    "dbg_level": 			{"cmd": "debug/level", "auth_req": True},
-    "dbg_linkoff": 			{"cmd": "debug/linkoff", "auth_req": True},
-    "dbg_linkon": 			{"cmd": "debug/linkon", "auth_req": True},
-    "dbg_mem": 		    	{"cmd": "debug/mem", "auth_req": True},
-    "dbg_memtest_end": 		{"cmd": "debug/memtestend", "auth_req": True},
-    "dbg_memtest_start": 	{"cmd": "debug/memteststart", "auth_req": True},
-    "dbg_rcv": 		        {"cmd": "debug/rcv", "auth_req": True},
-    "dbg_scheduler": 		{"cmd": "debug/scheduler", "auth_req": True},
-    "dbg_sockets": 		    {"cmd": "debug/sockets", "auth_req": True},
-    "dbg_plc": 		        {"cmd": "debug/sps", "auth_req": True},
-    "dbg_test": 		    {"cmd": "debug/test", "auth_req": True}
+    "dbg_config": 			{"cmd": "dev/debug/config", "auth_req": True},
+    "dbg_cycle": 			{"cmd": "dev/debug/cycle", "auth_req": True},
+    "dbg_free": 			{"cmd": "dev/debug/free", "auth_req": True},
+    "dbg_fs": 		    	{"cmd": "dev/debug/fs", "auth_req": True},
+    "dbg_gateway": 			{"cmd": "dev/debug/gateway", "auth_req": True},
+    "dbg_httpsockets":	    {"cmd": "dev/debug/httpsockets", "auth_req": True},
+    "dbg_inmem": 			{"cmd": "dev/debug/inmem", "auth_req": True},
+    "dbg_level": 			{"cmd": "dev/debug/level", "auth_req": True},
+    "dbg_linkoff": 			{"cmd": "dev/debug/linkoff", "auth_req": True},
+    "dbg_linkon": 			{"cmd": "dev/debug/linkon", "auth_req": True},
+    "dbg_mem": 		    	{"cmd": "dev/debug/mem", "auth_req": True},
+    "dbg_memtest_end": 		{"cmd": "dev/debug/memtestend", "auth_req": True},
+    "dbg_memtest_start": 	{"cmd": "dev/debug/memteststart", "auth_req": True},
+    "dbg_mutex": 	        {"cmd": "dev/debug/mutex", "auth_req": True},
+    "dbg_rcv": 		        {"cmd": "dev/debug/rcv", "auth_req": True},
+    "dbg_scheduler": 		{"cmd": "dev/debug/scheduler", "auth_req": True},
+    "dbg_sockets": 		    {"cmd": "dev/debug/sockets", "auth_req": True},
+    "dbg_plc": 		        {"cmd": "dev/debug/sps", "auth_req": True},
+    "dbg_test": 		    {"cmd": "dev/debug/test", "auth_req": True}
 }
+
+
+EXTENSION_COMMANDS = {
+    "air_get_learned":          {"cmd": "dev/sps/airgetlearned", "auth_req": True},
+    "air_learn":                {"cmd": "dev/sps/airlearn", "auth_req": True},
+    "air_set_ip":               {"cmd": "dev/sps/airsetip", "auth_req": True},
+    "air_get_param":            {"cmd": "dev/sys/airgetparam", "auth_req": True},
+    "air_mac_statistics":       {"cmd": "dev/sys/airmacstatistics", "auth_req": True},
+    "air_set_param":            {"cmd": "dev/sys/airsetparam", "auth_req": True},
+    "air_statistics":           {"cmd": "dev/sys/airstatistics", "auth_req": True},
+    "air_trace":                {"cmd": "dev/sys/airtrace", "auth_req": True},
+    "air_traceback":            {"cmd": "dev/sys/airtraceback", "auth_req": True},
+    "air_unlock_otau":          {"cmd": "dev/sys/airunlockotau", "auth_req": True},
+    "air_unpair":               {"cmd": "dev/sys/airunpair", "auth_req": True},
+    "air_update_device":        {"cmd": "dev/sys/airupdatedevice", "auth_req": True},
+
+    "dmx_get_searched":         {"cmd": "dev/sps/dmxgetsearched", "auth_req": True},
+    "dmx_search":               {"cmd": "dev/sps/dmxsearch", "auth_req": True},
+    "dmx_search_finished":      {"cmd": "dev/sps/dmxsearchfinished", "auth_req": True},
+
+    "eib_program":              {"cmd": "dev/sps/eibprogram", "auth_req": True},
+    "eib_state":                {"cmd": "dev/sps/eibstate", "auth_req": True},
+
+    "ir_get_learned":           {"cmd": "dev/sps/irgetlearned", "auth_req": True},
+    "ir_learn":                 {"cmd": "dev/sps/irlearn", "auth_req": True},
+
+    "set_ext_serialno":         {"cmd": "dev/sys/extsetsn", "auth_req": True},
+    "get_ext_statistics":       {"cmd": "dev/sys/extstatistics", "auth_req": True},
+    "update_extensions":        {"cmd": "dev/sys/updateext", "descr": "Update der Extensions starten", "admin_only": True, "auth_req": True},
+    "update_ext_no_retries":    {"cmd": "dev/sys/updateextnoretries", "auth_req": True},
+
+}
+
 
 FS_COMMANDS = {
     "add_file": {"cmd": "dev/fsput/{}", "auth_req": True, "descr": "adds a file", "admin_only": True},
@@ -96,33 +135,25 @@ GATEWAY_COMMANDS = {
     "gw_get_structure_patch":       {"cmd": "dev/gw/getstructurepatch"},
     "gw_get_xml_stats":             {"cmd": "dev/gw/getxmlstats"},
     "gw_get_sys_info":              {"cmd": "dev/gw/getsysinfo"},
+    "update_gw":                    {"cmd": "dev/sys/updategw", "auth_req": True},
 }
 
 
 LAN_COMMANDS = {
-    "get_num_sent_pkts": {"cmd": "dev/lan/txp", "descr": "Anzahl LAN gesendete Pakete holen", "admin_only": True, "auth_req": True},
-    "get_num_sent_pkts_error": {"cmd": "dev/lan/txe", "descr": "Anzahl LAN gesendete Pakete mit Fehler holen", "admin_only": True, "auth_req": True},
-    "get_num_collisions": {"cmd": "dev/lan/txc", "descr": "Anzahl LAN gesendete Pakete mit Kollision holen", "admin_only": True, "auth_req": True},
-    "get_num_buffer_error": {"cmd": "dev/lan/exh", "descr": "Anzahl LAN Bufferfehler holen", "admin_only": True, "auth_req": True},
-    "get_num_underrun_error": {"cmd": "dev/lan/txu", "descr": "Anzahl LAN Underrunfehler holen", "admin_only": True, "auth_req": True},
-    "get_num_received_pkts": {"cmd": "dev/lan/rxp", "descr": "Anzahl LAN empfangene Pakete holen", "admin_only": True, "auth_req": True},
-    "get_eof_error": {"cmd": "dev/lan/eof", "descr": "Anzahl LAN EOF Fehler holen", "admin_only": True, "auth_req": True},
-    "get_rx_overrun_error": {"cmd": "dev/lan/rxo", "descr": "Anzahl LAN Empfangsüberlauffehler holen", "admin_only": True, "auth_req": True},
-    "get_norecvbuffer_error": {"cmd": "dev/lan/nob", "descr": "Retrieve number of LAN ‘No receive buffer’ errors", "admin_only": True, "auth_req": True},
+    "get_num_sent_pkts":            {"cmd": "dev/lan/txp", "descr": "Anzahl LAN gesendete Pakete holen", "admin_only": True, "auth_req": True},
+    "get_num_sent_pkts_error":      {"cmd": "dev/lan/txe", "descr": "Anzahl LAN gesendete Pakete mit Fehler holen", "admin_only": True, "auth_req": True},
+"get_num_collisions":               {"cmd": "dev/lan/txc", "descr": "Anzahl LAN gesendete Pakete mit Kollision holen", "admin_only": True, "auth_req": True},
+"get_num_buffer_error":             {"cmd": "dev/lan/exh", "descr": "Anzahl LAN Bufferfehler holen", "admin_only": True, "auth_req": True},
+    "get_num_underrun_error":       {"cmd": "dev/lan/txu", "descr": "Anzahl LAN Underrunfehler holen", "admin_only": True, "auth_req": True},
+    "get_num_received_pkts":        {"cmd": "dev/lan/rxp", "descr": "Anzahl LAN empfangene Pakete holen", "admin_only": True, "auth_req": True},
+    "get_eof_error":                {"cmd": "dev/lan/eof", "descr": "Anzahl LAN EOF Fehler holen", "admin_only": True, "auth_req": True},
+    "get_rx_overrun_error":         {"cmd": "dev/lan/rxo", "descr": "Anzahl LAN Empfangsüberlauffehler holen", "admin_only": True, "auth_req": True},
+    "get_norecvbuffer_error":       {"cmd": "dev/lan/nob", "descr": "Retrieve number of LAN ‘No receive buffer’ errors", "admin_only": True, "auth_req": True},
+    "get_num_lan_ints":             {"cmd": "dev/sys/lanints", "descr": "Anzahl LAN-Interrupts holen", "admin_only": True, "auth_req": True},
 }
 
 
 PLC_COMMANDS = {
-    "get_sps_state": {"cmd": "dev/sps/state", "admin_only": False, "descr": """PLC status query
-0 – No status
-1 – PLC booting
-2 – PLC program is loaded
-3 – PLC has started
-4 – Loxone Link has started
-5 – PLC running
-6 – PLC change
-7 – PLC error
-8 – Update is occuring"""},
     "get_sps_clock":        {"cmd": "dev/sps/status", "auth_req": True, "descr": "aktuelle PLC Frequenz abfragen", "admin_only": False},
     "restart_sps":          {"cmd": "dev/sps/restart", "auth_req": True, "descr": "PLC neu starten", "admin_only": True, "not_safe": True},
     "stop_sps":             {"cmd": "dev/sps/stop", "auth_req": True, "descr": "PLC anhalten", "admin_only": True, "not_safe": True},
@@ -132,14 +163,87 @@ PLC_COMMANDS = {
     "list_inputs":          {"cmd": "dev/sps/enumin", "auth_req": True, "descr": "alle Eingänge der PLC auflisten", "admin_only": True},
     "list_outputs":         {"cmd": "dev/sps/enumout", "auth_req": True, "descr": "alle Ausgänge der PLC auflisten", "admin_only": True},
     "identify_ms":          {"cmd": "dev/sps/identify", "auth_req": True, "descr": "Miniserver identifizieren für Erweiterungen muss die Seriennummer als Parameter mitgegeben werden.", "admin_only": True},
-    "air_get_learned":      {"cmd": "dev/sps/airgetlearned", "auth_req": True},
-    "air_learn":            {"cmd": "dev/sps/airlearn", "auth_req": True},
-    "air_set_ip":           {"cmd": "dev/sps/airsetip", "auth_req": True},
+    "assign_user":          {"cmd": "dev/sps/assignuser", "auth_req": True},
+    "change_mail":          {"cmd": "dev/sps/changemail", "auth_req": True},
+    "get_changes":          {"cmd": "dev/sps/changes", "auth_req": True},              # 404 not found?
+    "client":               {"cmd": "dev/sps/client", "auth_req": True},               # TODO determine purpose
+    "commissioning":        {"cmd": "dev/sps/commissioning", "auth_req": True},        # TODO determine purpose
+    "count":                {"cmd": "dev/sps/count", "auth_req": True},                # TODO determine purpose
+    "create_stats":         {"cmd": "dev/sps/createstats", "auth_req": True},
+    "create_user":          {"cmd": "dev/sps/createuser", "auth_req": True},
+    "delete_user":          {"cmd": "dev/sps/deleteuser", "auth_req": True},
+    "dis_stats":            {"cmd": "dev/sps/disstats", "auth_req": True},              # TODO determine purpose (disable stats?)
+    "dump":                 {"cmd": "dev/sps/dump", "auth_req": True},
+    "event":                {"cmd": "dev/sps/event", "auth_req": True},             # not working?
+    "event_monitor":        {"cmd": "dev/sps/eventmonitor", "auth_req": True},
+    "generate_stats":       {"cmd": "dev/sps/genstats", "auth_req": True, "descr": "Generate statistics for testing purposes"},
+    "get_group_list":       {"cmd": "dev/sps/getgrouplist", "auth_req": True},
+    "get_group_users":      {"cmd": "dev/sps/getgroupusers", "auth_req": True, "descr": "Retrieve list of groups with all its users"},
+    "get_stats":            {"cmd": "dev/sps/getstats", "auth_req": True},
+    "get_stats_date":       {"cmd": "dev/sps/getstatsdate", "auth_req": True},
+    "get_mac_dash":         {"cmd": "dev/sys/mac", "auth_req": True, "descr": "Retrieve mac (separated by '-')"},
+    "get_user_list":        {"cmd": "dev/sps/getuserlist", "auth_req": True, "descr": "Retrieve list of all users"},
+    "io":                   {"cmd": "dev/sps/io", "auth_req": True, "descr": "Issue commands to control blocks"},
+    "io_secure":            {"cmd": "dev/sps/ios", "auth_req": True, "descr": "Issue secure commands to control blocks"},
+    "list_commands":        {"cmd": "dev/sps/listcmds", "auth_req": True},
+    "log":                  {"cmd": "dev/sps/log", "auth_req": True},
+    "log_irr":              {"cmd": "dev/sps/logirr", "auth_req": True},
+    "log_blinds":           {"cmd": "dev/sps/logjal", "auth_req": True},
+
+    "get_app_version":      {"cmd": "dev/sps/loxappversion", "auth_req": True},     # deprecated? TODO: determine max. version
+    "get_app_version_2":    {"cmd": "dev/sps/loxappversion2", "auth_req": True},    # deprecated? TODO: determine max. version
+    "get_program_version":  {"cmd": "dev/sps/LoxAPPversion3", "auth_req": True, "descr": "Get date and time of last modification of the smart home configuration"},
+
+    "remove_cmd":           {"cmd": "dev/sps/removecmd", "auth_req": True},
+    "remove_task":          {"cmd": "dev/sps/removetask", "auth_req": True},
+    "remove_user":          {"cmd": "dev/sps/removeuser", "auth_req": True},
+
+    "restart_clear":        {"cmd": "dev/sps/restartclear", "auth_req": True},
+    "restart_clear_u":      {"cmd": "dev/sps/restartclearu", "auth_req": True},
+    "restart_def_log":      {"cmd": "dev/sps/restartdeflog", "auth_req": True},
+    "restart_no_rem":       {"cmd": "dev/sps/restartnorem", "auth_req": True},
+    "search_devices":       {"cmd": "dev/sps/searchdev", "auth_req": True},
+    "set_ip":               {"cmd": "dev/sps/setip", "auth_req": True},
+    "set_pwd":              {"cmd": "dev/sps/setpwd", "auth_req": True},
+    "start_weather":        {"cmd": "dev/sps/startweather", "auth_req": True},
+    "get_sps_state":        {"cmd": "dev/sps/state", "admin_only": False, "descr": """PLC status query
+0 – No status
+1 – PLC booting
+2 – PLC program is loaded
+3 – PLC has started
+4 – Loxone Link has started
+5 – PLC running
+6 – PLC change
+7 – PLC error
+8 – Update is occuring"""},
+    "get_stats_type":       {"cmd": "dev/sps/statstype", "auth_req": True},
+    "status_update":        {"cmd": "dev/sps/statusupdate", "auth_req": True},
+    "update_secure_task":   {"cmd": "dev/sps/updatesecuretask", "auth_req": True},
+    "update_task":          {"cmd": "dev/sps/updatetask", "auth_req": True},
+    "update":               {"cmd": "dev/sys/update", "auth_req": True},    # TODO check what exactly is being updated
+    "get_update_error":     {"cmd": "dev/sys/updateerror", "auth_req": True},
+    "get_update_errortext": {"cmd": "dev/sys/updateerrortext", "auth_req": True},
+    "update_files":         {"cmd": "dev/sys/updatefiles", "auth_req": True},   # TODO det. purpose
+    "get_upload_error":     {"cmd": "dev/sys/uploaderror", "auth_req": True},
+    "get_upload_errortext": {"cmd": "dev/sys/uploaderrortext", "auth_req": True},
+    "get_ws_device":        {"cmd": "dev/sys/wsdevice", "auth_req": True},          # TODO det. purpose
+    "get_ws_extension":     {"cmd": "dev/sys/wsextension", "auth_req": True},
+    "is_secured":           {"cmd": "dev/sps/issecured", "auth_req": True},     # TODO det purpose
+}
+
+
+PUSH_NOTIFICATION_COMMANDS = {
+    "pns_check_registration":       {"cmd": "dev/pns/checkregistration", "auth_req": True},
+    "pns_get_history":              {"cmd": "dev/pns/gethistory", "auth_req": True},
+    "pns_get_unread":               {"cmd": "dev/pns/getunread", "auth_req": True},
+    "pns_mark_read":                {"cmd": "dev/pns/markread", "auth_req": True},
+    "pns_register":                 {"cmd": "dev/pns/register", "auth_req": True},
+    "pns_unregister":               {"cmd": "dev/pns/unregister", "auth_req": True},
 }
 
 
 SESSION_COMMANDS = {
-    "get_key": {"cmd": "dev/sys/getkey"},
+    "get_key":                      {"cmd": "dev/sys/getkey"},
     "authenticate": {"cmd": "authenticate/{}", "auth_req": True},     # hash   user:pwd          TODO: auth required?
     "get_usersalt": {"cmd": "dev/sys/getkey2/{}"},  # [user] --> requests both a one-time-salt (key) and a user-salt                !! 'code'  in response is lowercase, not uppercase as in all the other response
     "get_token": {"cmd": "dev/sys/gettoken/{}/{}/{}/{}/{}"},             # [hash, user, type:<int>, uuid, info] --> requests a token, type specifies the lifespan, uuid is used to identify who requested the token & info is a userfriendly info on the platformdevice used.
@@ -159,34 +263,46 @@ SESSION_COMMANDS = {
 }
 
 SYSTEM_COMMANDS = {
-    "get_cpu": {"cmd": "dev/sys/cpu", "descr": "CPU-Last holen", "admin_only": True, "auth_req": True},
+    "get_cc":                       {"cmd": "dev/sys/cc", "auth_req": True},        # TODO determine purpose (collisions?)
+    "get_cpu":                      {"cmd": "dev/sys/cpu", "descr": "CPU-Last holen", "admin_only": True, "auth_req": True},
     "get_sys_ctx_switches": {"cmd": "dev/sys/contextswitches", "descr": "Anzahl Umschaltungen zwischen Tasks holen", "admin_only": True, "auth_req": True},
     "get_sys_ctx_switches_ints": {"cmd": "dev/sys/contextswitchesi", "descr": "Anzahl Umschaltungen zwischen Tasks holen, die von Interrupts ausgelöst wurden", "admin_only": True, "auth_req": True},
-    "get_heap_size": {"cmd": "dev/sys/heap", "descr": "Speichergröße holen", "admin_only": False, "auth_req": True},
-    "get_num_ints": {"cmd": "dev/sys/ints", "descr": "Anzahl Systeminterrupts holen", "admin_only": True, "auth_req": True},
-    "get_num_comm_ints": {"cmd": "dev/sys/comints", "descr": "Anzahl Kommunikationsinterrupts holen", "admin_only": True, "auth_req": True},
-    "get_num_lan_ints": {"cmd": "dev/sys/lanints", "descr": "Anzahl LAN-Interrupts holen", "admin_only": True, "auth_req": True},
+    "get_heap_size":                {"cmd": "dev/sys/heap", "descr": "Speichergröße holen", "admin_only": False, "auth_req": True},
+    "get_help":                     {"cmd": "dev/sys/help", "auth_req": True, "descr": "Get list of commands supported by the MS"},
+    "get_hw_id":                    {"cmd": "dev/sys/hwid", "auth_req": True},
+    "get_num_ints":                 {"cmd": "dev/sys/ints", "descr": "Anzahl Systeminterrupts holen", "admin_only": True, "auth_req": True},
+    "get_num_comm_ints":            {"cmd": "dev/sys/comints", "descr": "Anzahl Kommunikationsinterrupts holen", "admin_only": True, "auth_req": True},
+    "get_data_flash":               {"cmd": "dev/sys/dataflash", "auth_req": True}, # TODO determine purpose
     "get_watchdog_bits": {"cmd": "dev/sys/watchdog", "descr": "Watchdog-Bits holen", "admin_only": True, "auth_req": True},
-    "get_date": {"cmd": "dev/sys/date", "descr": "Liefert das lokale Datum", "admin_only": True, "auth_req": True},
-    "get_time": {"cmd": "dev/sys/time", "descr": "Liefert die lokale Zeit", "admin_only": True, "auth_req": True},
-    "get_arp_table": {"cmd": "dev/sys/arp", "descr": "Retrieve all entries in arp table", "auth_req": True},
-    "set_datetime": {"cmd": "dev/sys/setdatetime", "descr": "Sets or gets system date and time. Format: 2013-06-18 16:58:00 or 18/06/2013 16:58:00", "admin_only": False, "auth_req": True},
-    "get_sps_cycles": {"cmd": "dev/sys/spscycle", "descr": "Anzahl PLC-Zyklen holen", "admin_only": True, "auth_req": True},
-    "query_ntp": {"cmd": "dev/sys/ntp", "descr": "NTP Anfrage forcieren", "admin_only": True, "auth_req": True},
-    "reboot_ms": {"cmd": "dev/sys/reboot", "descr": "Miniserver booten", "admin_only": True, "auth_req": True, "not_safe": True},
-    "show_config_conns": {"cmd": "dev/sys/check", "descr": "Zeigt aktive Loxone Config Verbindungen", "admin_only": False, "auth_req": True},
-    "log_config_off": {"cmd": "dev/sys/logoff", "descr": "Trennt bestehende Loxone Config Verbindungen", "admin_only": True, "auth_req": True},
-    "show_last_cpu": {"cmd": "dev/sys/lastcpu", "descr": "zeigt letzen Wert der CPU Auslastung und Anzahl der PLC Zyklen", "admin_only": True, "auth_req": True},
-    "get_searchdata": {"cmd": "dev/sys/searchdata", "descr": "listet die Suchergebnisse", "admin_only": False},
+    "get_date":                     {"cmd": "dev/sys/date", "descr": "Liefert das lokale Datum", "admin_only": True, "auth_req": True},
+    "get_time":                     {"cmd": "dev/sys/time", "descr": "Liefert die lokale Zeit", "admin_only": True, "auth_req": True},
+    "get_arp_table":                {"cmd": "dev/sys/arp", "descr": "Retrieve all entries in arp table", "auth_req": True},
+    "set_datetime":                 {"cmd": "dev/sys/setdatetime", "descr": "Sets or gets system date and time. Format: 2013-06-18 16:58:00 or 18/06/2013 16:58:00", "admin_only": False, "auth_req": True},
+    "get_log_port":                 {"cmd": "dev/sys/logport", "auth_req": True},
+    "get_log_seq":                  {"cmd": "dev/sys/logseq", "auth_req": True},
+    "get_sps_cycles":               {"cmd": "dev/sys/spscycle", "descr": "Anzahl PLC-Zyklen holen", "admin_only": True, "auth_req": True},
+    "query_ntp":                    {"cmd": "dev/sys/ntp", "descr": "NTP Anfrage forcieren", "admin_only": True, "auth_req": True},
+    "reboot_ms":                    {"cmd": "dev/sys/reboot", "descr": "Reboot Miniserver", "admin_only": True, "auth_req": True, "not_safe": True},
+    "reboot_ext":                   {"cmd": "dev/sys/rebootext", "auth_req": True},         # TODO check if only extensions are rebooted
+    "show_config_conns":            {"cmd": "dev/sys/check", "descr": "Zeigt aktive Loxone Config Verbindungen", "admin_only": False, "auth_req": True},
+    "log_config_off":               {"cmd": "dev/sys/logoff", "descr": "Trennt bestehende Loxone Config Verbindungen", "admin_only": True, "auth_req": True},
+    "show_last_cpu":                {"cmd": "dev/sys/lastcpu", "descr": "zeigt letzen Wert der CPU Auslastung und Anzahl der PLC Zyklen", "admin_only": True, "auth_req": True},
+    "start_dev_search":             {"cmd": "dev/sys/search", "auth_req": True},
+    "get_dev_search_results":       {"cmd": "dev/sys/searchdata", "descr": "listet die Suchergebnisse", "admin_only": False},
     "get_status": {"cmd": "/data/status", "descr": "zeigt Status von Miniserver und allen Extensions", "admin_only": False, "auth_req": True},
     "get_stats": {"cmd": "/stats", "descr": "zeigt die Statistiken", "admin_only": True, "auth_req": True},
     "get_weather_file": {"cmd": "/data/weatheru.xml", "descr": "zeigt die Wetterdaten (nur bei aktivem Wetteservice)", "admin_only": False, "auth_req": True},
     "get_1wire_stat": {"cmd": "dev/sys/ExtStatistics/05000001", "descr": "Statistik der 1-Wire Extension abrufen (05000001 ersetzen durch Seriennummer der Extension)", "admin_only": True, "auth_req": True},
     "get_air_stat": {"cmd": "dev/sys/AirStatistics/0C000001deviceIndex", "descr": "Statistik der Air Geräte abrufen (0C000001 ersetzen durch Seriennummer der Extension)", "admin_only": True, "auth_req": True},
-    "update_extensions": {"cmd": "dev/sys/updateext", "descr": "Update der Extensions starten", "admin_only": True, "auth_req": True},
-    "test_sdcard": {"cmd": "dev/sys/sdtest", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
-    "test_sdcard_full": {"cmd": "dev/sys/sdtestfull", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
-    "test_sdcard_burn": {"cmd": "dev/sys/sdtestburn", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
+    "test_sdcard":                  {"cmd": "dev/sys/sdtest", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
+    "test_sdcard_full":             {"cmd": "dev/sys/sdtestfull", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
+    "test_sdcard_burn":             {"cmd": "dev/sys/sdtestburn", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
+    "start_mem_stresstest":         {"cmd": "dev/sys/memstress", "auth_req": True},
+    "repair_flash":                 {"cmd": "dev/sys/repairflash", "auth_req": True},
+    "get_uptime":                   {"cmd": "dev/sys/secs", "auth_req": True, "descr": "Get uptime of Miniserver in seconds"},
+    "check_udp":                    {"cmd": "dev/sys/udpcheck", "auth_req": True},      # TODO determine purpose - maybe check for update?
+    "calculate_crc":                {"cmd": "dev/sys/crc", "auth_req": True},
+    "set_webinterface":             {"cmd": "dev/sys/setwebif", "auth_req": True},
 }
 
 
@@ -200,6 +316,11 @@ TASK_COMMANDS = {
     "get_task_state":           {"cmd": "dev/task{}/state", "descr": "Task Status holen", "admin_only": True, "auth_req": True},
 }
 
+UNKNOWN_COMMANDS = {
+    "grw_mme": {"cmd": "dev/grw/mme", "auth_req": True},        # grw?
+    "grw_test": {"cmd": "dev/grw/test", "auth_req": True},
+}
 
-ALL_COMMANDS = [APP_COMMANDS, BUS_COMMANDS, CONFIG_COMMANDS, DEBUG_COMMANDS, FS_COMMANDS, LAN_COMMANDS, PLC_COMMANDS, SESSION_COMMANDS, SYSTEM_COMMANDS, TASK_COMMANDS]
+
+ALL_COMMANDS = [APP_COMMANDS, BUS_COMMANDS, CONFIG_COMMANDS, DEBUG_COMMANDS, EXTENSION_COMMANDS, FS_COMMANDS, GATEWAY_COMMANDS, LAN_COMMANDS, PLC_COMMANDS, SESSION_COMMANDS, SYSTEM_COMMANDS, TASK_COMMANDS, UNKNOWN_COMMANDS]
 
