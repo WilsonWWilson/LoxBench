@@ -1,7 +1,6 @@
 from comm import LoxComm
-from secrets.credentials import user, password
-from api import sync_api_list
-from secrets.credentials import user, password
+from api import sync_api_list, check_api_fns
+import secrets.credentials as creds
 from update_analyzer import unpacker
 from config_analyzer.loxcc_parser import uncompress_loxcc#, decompress_loxcc
 import asyncio
@@ -34,6 +33,8 @@ def main():
     conn_grp.add_argument('-c', '--connect', help="establish a websocket connection to given Miniserver", action='store_true')
     conn_grp.add_argument('--host')
     conn_grp.add_argument('-p', '--port')
+    parser.add_argument('-u', '--user', help="User used to connect to the miniserver")
+    parser.add_argument('--pwd', help="Password of the user")
     parser.add_argument('--sync-api')
     parser.add_argument('--ms-version')
 
@@ -41,13 +42,17 @@ def main():
     if args.extract:
         _extract(args.extract, args.dest_dir)
 
+    comm = None
     if args.connect:
-        comm = LoxComm(args.host)
+        comm = LoxComm(args.host, args.user, args.pwd)
         # comm = LoxComm("demominiserver.loxone.com:7779")
-        # comm.connect((user, password))
-        # comm.check_api_fns(ALL_COMMANDS)
+
     if args.sync_api:
-        sync_api_list(args.sync_api, args.ms_version)
+        new_cmds, unknown_cmds = sync_api_list(args.sync_api, args.ms_version)
+
+        if comm:
+            check_api_fns(unknown_cmds, comm)
+
 
 # TODO check certificates
 # TODO analyze UPD format

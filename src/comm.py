@@ -10,10 +10,8 @@ from requests.structures import CaseInsensitiveDict
 import re
 import os
 import struct
-import secrets.credentials as credentials
 import json
 import binascii
-import time
 from http_status_codes import HttpStatusCode
 # from api import SESSION_COMMANDS as CMD
 
@@ -49,9 +47,11 @@ class Permission:
 
 
 class LoxComm:
-    def __init__(self, host):
+    def __init__(self, host, user, pwd):
         self._host = host
         self._token = None
+        self._user = user
+        self._pwd = pwd
         self._request_queue = asyncio.Queue()
 
     @staticmethod
@@ -60,12 +60,21 @@ class LoxComm:
 
         if r.status_code == HttpStatusCode.OK:
             # res = CaseInsensitiveDict(r.json()['LL'])
-            res = r.json()['LL']
-            if full_response:
-                code = res.get('Code', res.get('code', "-can't retrieve code-"))
-                return code, res['value'], res['control']        # can't unify it with parsing of socket response, because there the 'code' is lowercase
+            content_type = r.headers['Content-Type']
+            if 'json' in content_type:
+                res = r.json()['LL']
+                if full_response:
+                    code = res.get('Code', res.get('code', "-can't retrieve code-"))
+                    return code, res['value'], res['control']        # can't unify it with parsing of socket response, because there the 'code' is lowercase
+                else:
+                    return res['value']
+            # elif content_type.endswith('xml'):
+            #     pass
             else:
-                return res['value']
+                if full_response:
+                    return HttpStatusCode(r.status_code), r.content, cmd
+                else:
+                    return r.content
         else:
             return HttpStatusCode(r.status_code)
 
@@ -169,8 +178,19 @@ class LoxComm:
     async def send(self, ws, msg):
         pass
 
-    def connect(self, credentials):
+    def connect(self, credentials=None):
+        if credentials is None:
+            credentials = (self._user, self._pwd)
         asyncio.get_event_loop().run_until_complete(self.lox_comm(credentials))
+
+    def get_credentials(self):
+        return self._user, self._pwd
+
+    def get_host(self):
+        return self._host
+
+    def request(self, cmd, full_response=False):
+        return self.lox_get(self._host, cmd, (self._user, self._pwd), full_response)
 
     def get_public_key(self):
         pub_key_pem = self.lox_get(self._host, CMD.GET_PUBLIC_KEY)
@@ -252,38 +272,3 @@ class LoxComm:
         token = self.lox_get(self._host, enc_cmd)
         token2 = self.lox_get(self._host, cmd_ref)
 
-    def check_api_fns(self, command_groups):
-        def _check_function(cmd, creds=None):
-            res = self.lox_get(self._host, cmd, creds, True)
-            if auth_req and creds is None:
-                print("'{}': claimed to need auth, but works without!".format(k))
-            if type(res) is HttpStatusCode:
-                print("'{}': got HttpStatusCode: {}".format(k, res))
-                code, res = res, '-'
-            else:
-                code, res, cmd = res    # unpack full response
-                print("'{} ({})'\t\t=> [{}] {}".format(k, cmd, code, res))
-            return code, res
-
-        for grp in command_groups:
-            for k, cmd_info in grp.items():
-                cmd = cmd_info["cmd"].replace('dev', 'jdev', True)
-                admin_only = cmd_info.get("admin_only", False)
-                socket_only = cmd_info.get("socket_only", False)
-                not_safe = cmd_info.get("not_safe", False)
-                auth_req = cmd_info.get("auth_req", False)
-                user_creds = (credentials.user, credentials.password) if auth_req else None
-
-                if not_safe:    # skip requests, that might cause permanent changes
-                    continue
-
-                # try:
-                was_successful, _ = _check_function(cmd, user_creds)
-                # print("Checking {}   \t admin_only:{}    \t socket_only:{}".format(k, admin_only, socket_only))
-                if not auth_req:
-                    print("'{}': Authentication is required!".format(k))
-                _check_function(cmd, (credentials.user, credentials.password))
-                # except:
-                #     print("'{}': unhandled problem".format(k))
-
-                time.sleep(0.2)

@@ -16,7 +16,8 @@ APP_COMMANDS = {
 }
 
 BLOCK_COMMANDS = {
-
+    "io":                   {"cmd": "dev/sps/io", "auth_req": True, "descr": "Issue commands to control blocks"},
+    "io_secure":            {"cmd": "dev/sps/ios", "auth_req": True, "descr": "Issue secure commands to control blocks"},
 }
 
 BUS_COMMANDS = {
@@ -133,7 +134,6 @@ EXTENSION_COMMANDS = {
     "get_ext_info":             {"cmd": "dev/sys/extinfo/{sn}", "auth_req": True, "descr": "Retrieve information of the extension with given serial number", "params": {"sn": "serial number of the extension"}, "min_vers": "10.0.9.24"},
     "update_extensions":        {"cmd": "dev/sys/updateext", "descr": "Update der Extensions starten", "admin_only": True, "auth_req": True},
     "update_ext_no_retries":    {"cmd": "dev/sys/updateextnoretries", "auth_req": True},
-
 }
 
 
@@ -147,8 +147,8 @@ FIDELIO_COMMANDS = {
 FS_COMMANDS = {
     "add_file": {"cmd": "dev/fsput/{}", "auth_req": True, "descr": "adds a file", "admin_only": True},
     "ls": {"cmd": "dev/fslist/{}", "auth_req": True, "descr": "lists the directory path on the SD card", "admin_only": True},
-    "get_file": {"cmd": "dev/fsget/{}", "auth_req": True, "descr": "retrieves a file", "admin_only": True},
-    "get_log": {"cmd": "dev/fsget/log/def.log", "descr": "Log abrufen", "admin_only": True, "auth_req": True},
+    "get_file": {"cmd": "dev/fsget/{path}", "auth_req": True, "descr": "retrieves a file", "admin_only": True},
+    # "get_log": {"cmd": "dev/fsget/log/def.log", "descr": "Log abrufen", "admin_only": True, "auth_req": True},
     "rm_file": {"cmd": "dev/fsdel/{}", "auth_req": True, "descr": "deletes a file", "ad/min_only": True, "not_safe": True}
 }
 
@@ -224,8 +224,6 @@ PLC_COMMANDS = {
     "get_stats_date":       {"cmd": "dev/sps/getstatsdate", "auth_req": True},
     "get_mac_dash":         {"cmd": "dev/sys/mac", "auth_req": True, "descr": "Retrieve mac (separated by '-')"},
     "get_user_list":        {"cmd": "dev/sps/getuserlist", "auth_req": True, "descr": "Retrieve list of all users"},
-    "io":                   {"cmd": "dev/sps/io", "auth_req": True, "descr": "Issue commands to control blocks"},
-    "io_secure":            {"cmd": "dev/sps/ios", "auth_req": True, "descr": "Issue secure commands to control blocks"},
     "list_commands":        {"cmd": "dev/sps/listcmds", "auth_req": True},
     "log":                  {"cmd": "dev/sps/log", "auth_req": True},
     "log_irr":              {"cmd": "dev/sps/logirr", "auth_req": True},
@@ -336,7 +334,7 @@ SYSTEM_COMMANDS = {
     "get_hw_id":                    {"cmd": "dev/sys/hwid", "auth_req": True},
     "get_num_ints":                 {"cmd": "dev/sys/ints", "descr": "Anzahl Systeminterrupts holen", "admin_only": True, "auth_req": True},
     "get_num_comm_ints":            {"cmd": "dev/sys/comints", "descr": "Anzahl Kommunikationsinterrupts holen", "admin_only": True, "auth_req": True},
-    "get_data_flash":               {"cmd": "dev/sys/dataflash", "auth_req": True}, # TODO determine purpose
+    "get_data_flash":               {"cmd": "dev/sys/dataflash", "auth_req": True},             # TODO determine purpose
     "get_watchdog_bits":            {"cmd": "dev/sys/watchdog", "descr": "Watchdog-Bits holen", "admin_only": True, "auth_req": True},
     "get_date":                     {"cmd": "dev/sys/date", "descr": "Liefert das lokale Datum", "admin_only": True, "auth_req": True},
     "get_sys_info":                 {"cmd": "dev/sys/info", "auth_req": True, "descr": "Retrieve information about the system state in XML format", "min_vers": "10.0.9.24"},
@@ -355,9 +353,9 @@ SYSTEM_COMMANDS = {
     "show_last_cpu":                {"cmd": "dev/sys/lastcpu", "descr": "zeigt letzen Wert der CPU Auslastung und Anzahl der PLC Zyklen", "admin_only": True, "auth_req": True},
     "start_dev_search":             {"cmd": "dev/sys/search", "auth_req": True},
     "get_dev_search_results":       {"cmd": "dev/sys/searchdata", "descr": "listet die Suchergebnisse", "admin_only": False},
-    "get_status":                   {"cmd": "/data/status", "descr": "zeigt Status von Miniserver und allen Extensions", "admin_only": False, "auth_req": True},
-    "show_stats":                   {"cmd": "/stats", "descr": "zeigt die Statistiken", "admin_only": True, "auth_req": True},
-    "get_weather_file":             {"cmd": "/data/weatheru.xml", "descr": "zeigt die Wetterdaten (nur bei aktivem Wetteservice)", "admin_only": False, "auth_req": True},
+    "get_status":                   {"cmd": "data/status", "descr": "zeigt Status von Miniserver und allen Extensions", "admin_only": False, "auth_req": True},
+    "show_stats":                   {"cmd": "stats", "descr": "zeigt die Statistiken", "admin_only": True, "auth_req": True},
+    "get_weather_file":             {"cmd": "data/weatheru.xml", "descr": "zeigt die Wetterdaten (nur bei aktivem Wetteservice)", "admin_only": False, "auth_req": True},
     "test_sdcard":                  {"cmd": "dev/sys/sdtest", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
     "test_sdcard_full":             {"cmd": "dev/sys/sdtestfull", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
     "test_sdcard_burn":             {"cmd": "dev/sys/sdtestburn", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
