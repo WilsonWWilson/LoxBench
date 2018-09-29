@@ -1,12 +1,13 @@
-from comm import LoxComm
+from comm import LoxComm, DummyComm
 from secrets.credentials import user, password
-from api import sync_api_list
+from api import sync_api_list, discover_api_fns
 from secrets.credentials import user, password
 from update_analyzer import unpacker
 from config_analyzer.loxcc_parser import uncompress_loxcc#, decompress_loxcc
 import asyncio
 import argparse
 import pathlib
+
 
 
 async def echo(websocket, path):
@@ -22,6 +23,8 @@ def _extract(file_path, dest_dir=None):
         uncompress_loxcc(file_path, dest_dir)
 
 
+def _clean_command(cmd):
+    return cmd.replace(',', '').strip('/').strip()
 
 
 def main():
@@ -47,7 +50,17 @@ def main():
         # comm.connect((user, password))
         # comm.check_api_fns(ALL_COMMANDS)
     if args.sync_api:
-        sync_api_list(args.sync_api, args.ms_version)
+        source = []
+        path = pathlib.Path(args.sync_api)
+        if path.exists():
+            with open(path, 'r') as f:
+                source = [c.replace(',', '').strip().strip('/') for c in f.readlines()]
+                # source = [_clean_command() for c in f.readlines()]
+        # sync_api_list(args.sync_api, args.ms_version)
+
+        if args.connect:
+            comm = DummyComm()
+            discover_api_fns(source, comm)
 
 # TODO check certificates
 # TODO analyze UPD format
