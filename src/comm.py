@@ -272,3 +272,12 @@ class LoxComm:
         token = self.lox_get(self._host, enc_cmd)
         token2 = self.lox_get(self._host, cmd_ref)
 
+
+
+class DummyComm():
+    def request(self, cmd, full_request=False):
+        # print("Request: '{:<30}\r".format(cmd), end='')
+        print("Request: '{:<30}".format(cmd))
+        return HttpStatusCode.NOT_FOUND, '-'
+
+

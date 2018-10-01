@@ -3,6 +3,8 @@ import re
 import time
 import secrets.credentials as credentials
 from http_status_codes import HttpStatusCode
+import os.path
+import itertools
 from api.commands import ALL_COMMANDS
 
 
@@ -84,3 +86,49 @@ def check_api_fns(cmds, comm):
             #     print("'{}': unhandled problem".format(k))
 
         time.sleep(0.2)
+
+cnt = 0
+
+
+def discover_api_fns(suggestions, comm):
+    """
+    Hint: Suggested commands should be preprocessed. '/' at the beginning should be removed and no unnecessary symbols (or comments) should be at the end of the line
+    :param suggestions:
+    :param comm:
+    :return:
+    """
+    def _test_cmd(found_cmds, known_cmds, cmd):
+        global cnt
+        cnt += 1
+        if cmd in known_cmds:
+            code, res = HttpStatusCode.OK, "already known"
+        else:
+            code, res = comm.request(cmd, True)
+        if code != HttpStatusCode.NOT_FOUND:
+            found_cmds.append((cmd, res))
+        return code != HttpStatusCode.OK, res
+
+    found_cmds = []
+    lvl1_pfxs = ['dev', 'gw', 'data']
+    lvl2_pfxs = ['', 'cfg', 'sps', 'sys', 'pns', 'debug']
+    cmds = {}
+    test = [cmds.update(cs) for cs in ALL_COMMANDS]
+    known_cmds = set([re.sub("/{.*}", "", c['cmd'].lower()) for c in cmds.values()])
+    print("{} commands are already known prior to call!!".format(len(known_cmds)))
+
+    # TODO split suggestions with path to it's fragments and don't query resulting duplicates  (cmd: dev/testcmd vs guessed /dev/dev/testcmd
+
+    paths = [('',)] + list(itertools.product(lvl1_pfxs, lvl2_pfxs))
+
+    for cmd in set(suggestions):     # deduplicate suggestions
+        # clear '/' at beginning to be consistent
+        for c in [os.path.join(*p, cmd) for p in paths]:
+            if not cmd.startswith(pathlib.PurePath(c).anchor):
+                continue   # lvl1 prefix can't be nested
+            _test_cmd(found_cmds, known_cmds, c)
+        #
+
+    print(" --- {} requests ---".format(cnt))
+    print("\n### Found {} commands\n".format(len(found_cmds)))
+    # for c, res in found_cmds:
+    #     print("'{}' => {}".format(c, res))

@@ -1,6 +1,6 @@
-from comm import LoxComm
 from api import sync_api_list, check_api_fns
-import secrets.credentials as creds
+from comm import LoxComm, DummyComm
+from api import sync_api_list, discover_api_fns
 from update_analyzer import unpacker
 from config_analyzer.loxcc_parser import uncompress_loxcc#, decompress_loxcc
 import asyncio
@@ -21,6 +21,13 @@ def _extract(file_path, dest_dir=None):
         uncompress_loxcc(file_path, dest_dir)
 
 
+def _get_line(source_file):
+    source = []
+    path = pathlib.Path(source_file)
+    if path.exists():
+        with open(path, 'r') as f:
+            source = [c.replace(',', '').strip().strip('/') for c in f.readlines()]
+    return source
 
 
 def main():
@@ -35,7 +42,9 @@ def main():
     conn_grp.add_argument('-p', '--port')
     parser.add_argument('-u', '--user', help="User used to connect to the miniserver")
     parser.add_argument('--pwd', help="Password of the user")
-    parser.add_argument('--sync-api')
+    parser.add_argument('--sync-api', action='store_true')
+    parser.add_argument('--discover-api', action='store_true')
+    parser.add_argument('--input-file')
     parser.add_argument('--ms-version')
 
     args = parser.parse_args()
@@ -47,11 +56,13 @@ def main():
         comm = LoxComm(args.host, args.user, args.pwd)
         # comm = LoxComm("demominiserver.loxone.com:7779")
 
+    source = _get_line(args.input_file)
     if args.sync_api:
-        new_cmds, unknown_cmds = sync_api_list(args.sync_api, args.ms_version)
+        new_cmds, unknown_cmds = sync_api_list(source, args.ms_version)
 
-        if comm:
-            check_api_fns(unknown_cmds, comm)
+    if args.discover_api and comm:
+        # check_api_fns(unknown_cmds, comm)
+        discover_api_fns(source, comm)
 
 
 # TODO check certificates
