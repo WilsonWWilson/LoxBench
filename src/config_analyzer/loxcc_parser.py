@@ -3,6 +3,12 @@
 # implemented by Markus Fritze (https://gist.github.com/sarnau/e14ff9fe081611782a3f3cb2e2c2bacd)
 
 import struct
+import zlib
+import lz4.frame
+import lz4.block
+
+LOXCC_MAGIC = 0xAABBCCEE
+LZ4_MAGIC = 0x184D2204
 
 
 def uncompress_loxcc(file, dest_file=None):
@@ -65,3 +71,29 @@ def uncompress_loxcc(file, dest_file=None):
                     out_f.write(result_str)
 
             return result_str
+
+
+def decompress_loxcc(file):
+    """
+    LoxCC format [MAGIC][compressed size][uncompressed size]
+     MAGIC = 0xaabbccee
+    :param file:
+    :return:
+    """
+
+    # uncompress_loxcc(file)
+
+    with open(file, "rb") as f:
+    # with lz4.frame.open(file,lz4.frame.)
+        header, = struct.unpack('<L', f.read(4))
+        compressed_size, uncompress_size, crc, = struct.unpack('<LLL', f.read(12))
+        compressed_data = f.read()
+        my_crc = zlib.crc32(compressed_data)
+
+        compressed_data = b'\x04\x22\x4d\x18\x60\x6f\x73\xd8\x1a\x01\x00' + compressed_data
+        # compressed_data = b'\x04\x22\x4d\x18\x60\x70\x73\x2d\xad\x02\x00' + compressed_data
+        # data = lz4.frame.decompress(compressed_data)
+        d_ctx = lz4.frame.create_decompression_context()
+        # data, bytes_read, is_eof = lz4.frame.decompress_chunk(d_ctx, compressed_data)
+        data = lz4.block.decompress(compressed_data, uncompressed_size=2048)
+        a = 5

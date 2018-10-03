@@ -57,26 +57,37 @@ class LoxComm:
     @staticmethod
     def lox_get(host, cmd, credentials=None, full_response=False):
         r = requests.get('http://{}/{}'.format(host, cmd), auth=credentials)
+        code, content, res_cmd = None, None, cmd
 
         if r.status_code == HttpStatusCode.OK:
             # res = CaseInsensitiveDict(r.json()['LL'])
             content_type = r.headers['Content-Type']
             if 'json' in content_type:
-                res = r.json()['LL']
-                if full_response:
-                    code = res.get('Code', res.get('code', "-can't retrieve code-"))
-                    return code, res['value'], res['control']        # can't unify it with parsing of socket response, because there the 'code' is lowercase
-                else:
-                    return res['value']
+                try:
+                    res = r.json()['LL']
+                    if full_response:
+                        code = int(res.get('Code', res.get('code', 1337)))
+                        content, cmd = res['value'] = res['value'], res['control']        # can't unify it with parsing of socket response, because there the 'code' is lowercase
+                    else:
+                        content = res['value']
+                except json.decoder.JSONDecodeError as exc:
+                    print("Couldn't decode response to '{}': {}".format(cmd, exc))
+                    code, content = r.status_code, r.content
+                except KeyError as exc:     # response was not a regular api command
+                    code, content = r.status_code, r.content
             # elif content_type.endswith('xml'):
-            #     pass
+            #     code, content = r.status_code, r.content
+                # TODO extract data from response,if it's a command response
             else:
-                if full_response:
-                    return HttpStatusCode(r.status_code), r.content, cmd
-                else:
-                    return r.content
+                code, content = r.status_code, r.content
+        elif full_response:
+            code = r.status_code
+
+        if full_response:
+            return HttpStatusCode(code), content, res_cmd
         else:
-            return HttpStatusCode(r.status_code)
+            return content
+
 
     async def _get_public_key(self):
         pub_key_pem = self.lox_get(self._host, CMD.GET_PUBLIC_KEY)
@@ -271,7 +282,6 @@ class LoxComm:
 
         token = self.lox_get(self._host, enc_cmd)
         token2 = self.lox_get(self._host, cmd_ref)
-
 
 
 class DummyComm():

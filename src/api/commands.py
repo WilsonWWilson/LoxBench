@@ -155,25 +155,25 @@ FS_COMMANDS = {
 
 GATEWAY_COMMANDS = {
     "gw_estimate_stats":            {"cmd": "gw/estimatestats"},
-    "gw_get_custom":                {"cmd": "gw/getcustom"},
+    "gw_get_custom":                {"cmd": "gw/getcustom/{}", },
     "gw_get_device_state":          {"cmd": "gw/getdevicestate"},
     "gw_get_device_state_fast":     {"cmd": "gw/getdevicestatefast"},
-    "gw_get_device_monitor_data":   {"cmd": "gw/getdevicemonitordata"},
-    "gw_get_file":                  {"cmd": "gw/getfile"},
-    "gw_get_file_parts":            {"cmd": "gw/getfilepart"},
-    "gw_get_file_size":             {"cmd": "gw/getfilesize"},
+    "gw_get_device_monitor_data":   {"cmd": "gw/getdevicemonitordata/{%d}/{%%d}"},
+    "gw_get_file":                  {"cmd": "gw/getfile{%s}/{%d}"},
+    "gw_get_file_parts":            {"cmd": "gw/getfilepart{%s}/{%%d}"},
+    "gw_get_file_size":             {"cmd": "gw/getfilesize{%s}"},
     "gw_get_json_stats":            {"cmd": "gw/getjsonstats"},
-    "gw_get_jstats_list":           {"cmd": "gw/getjstatslist"},
-    "gw_get_jstats_for_app":        {"cmd": "gw/getjstatslistforapp"},
-    "gw_get_stats":                 {"cmd": "gw/getstats"},
-    "gw_get_statslist":             {"cmd": "gw/getstatslist"},
-    "gw_get_statslist_for_app":     {"cmd": "gw/getstatslistforapp"},
+    "gw_get_jstats_list":           {"cmd": "gw/getjstatslist/{%s}/{%%d}"},
+    "gw_get_jstats_for_app":        {"cmd": "gw/getjstatslistforapp/{%s}/{%%d}"},
+    "gw_get_stats":                 {"cmd": "gw/getstats/"},
+    "gw_get_statslist":             {"cmd": "gw/getstatslist/{%s}/{%%d}"},
+    "gw_get_statslist_for_app":     {"cmd": "gw/getstatslistforapp/{%s}/{%%d}"},
     "gw_get_tree":                  {"cmd": "gw/gettree"},
-    "gw_get_jvirtual_in_out":       {"cmd": "gw/jvirtualinout"},
-    "gw_get_virtual_in_out":        {"cmd": "gw/virtualinout"},
-    "gw_get_structure_patch":       {"cmd": "gw/getstructurepatch"},
+    "gw_get_jvirtual_in_out":       {"cmd": "gw/jvirtualinout/{%s}/{%%d}"},
+    "gw_get_virtual_in_out":        {"cmd": "gw/virtualinout/{%s}/{%%d}"},
+    "gw_get_structure_patch":       {"cmd": "gw/getstructurepatch/{%d}"},
     "gw_get_xml_stats":             {"cmd": "gw/getxmlstats"},
-    "gw_get_sys_info":              {"cmd": "gw/getsysinfo"},
+    "gw_get_sys_info":              {"cmd": "gw/getsysinfo/{}"},
     "update_gw":                    {"cmd": "dev/sys/updategw", "auth_req": True},
     "gw_get_io":                    {"cmd": "dev/gateway/io", "auth_req": True, "min_vers": "10.0.9.24"},
 }
@@ -225,7 +225,7 @@ PLC_COMMANDS = {
     "get_mac_dash":         {"cmd": "dev/sys/mac", "auth_req": True, "descr": "Retrieve mac (separated by '-')"},
     "get_user_list":        {"cmd": "dev/sps/getuserlist", "auth_req": True, "descr": "Retrieve list of all users"},
     "list_commands":        {"cmd": "dev/sps/listcmds", "auth_req": True},
-    "log":                  {"cmd": "dev/sps/log", "auth_req": True},
+    "log":                  {"cmd": "dev/sps/log/{str}", "descr": "log given string in Loxone Monitor", "params": {"str": "the string, which will be extracted and displayed in Loxone Monitor"}, "auth_req": True},
     "log_irr":              {"cmd": "dev/sps/logirr", "auth_req": True},
     "log_blinds":           {"cmd": "dev/sps/logjal", "auth_req": True},
     "log_climate":          {"cmd": "dev/sps/logclimate", "auth_req": True, "min_vers": "10.0.9.24"},
@@ -273,7 +273,7 @@ PLC_COMMANDS = {
     "get_upload_errortext": {"cmd": "dev/sys/uploaderrortext", "auth_req": True},
     "get_ws_device":        {"cmd": "dev/sys/wsdevice", "auth_req": True},          # TODO det. purpose
     "get_ws_extension":     {"cmd": "dev/sys/wsextension", "auth_req": True},
-    "is_secured":           {"cmd": "dev/sps/issecured", "auth_req": True},     # TODO det purpose
+    "is_secured":           {"cmd": "dev/sps/issecured/{}", "auth_req": True},     # TODO det purpose
     "update_user_access_code":      {"cmd": "dev/sps/updateuseraccesscode", "auth_req": True, "min_vers": "10.0.9.24"},
     "update_user_pwd":              {"cmd": "dev/sps/updateuserpwd", "auth_req": True, "min_vers": "10.0.9.24"},
     "update_user_pwd_hash":         {"cmd": "dev/sps/updateuserpwdh", "auth_req": True, "min_vers": "10.0.9.24"},
@@ -288,8 +288,13 @@ PLC_COMMANDS = {
     "save_weather_file":            {"cmd": "dev/sps/saveweatherfile", "auth_req": True, "min_vers": "10.0.9.24"},
     "set_external_resend_time":     {"cmd": "dev/sps/setexternalresendtime", "auth_req": True, "min_vers": "10.0.9.24"},
     "set_rating":                   {"cmd": "dev/sps/setrating", "auth_req": True, "min_vers": "10.0.9.24"},
+    "updat_user_access_code":       {"cmd": "jdev/sps/updateuseraccesscode/%s/%s", "auth_req": True, "min_vers": "10.0.9.24"},
 }
 
+
+PROGRAM_COMMANDS = {
+    "get_program_info":             {"cmd": "dev/sps/programinfo", "auth_req": True},
+}
 
 PUSH_NOTIFICATION_COMMANDS = {
     "pns_check_registration":       {"cmd": "dev/pns/checkregistration", "auth_req": True},
@@ -322,6 +327,10 @@ SESSION_COMMANDS = {
     "aes_next_salt":                {"cmd": "nextSalt/{}/{}/{}", "auth_req": True},          # [currSalt, nextSalt, payload] --> this is the part that will be AES encrypted.
     "enc_cmd":                      {"cmd": "dev/sys/enc/{}", "auth_req": True},                   # cipher
     "enc_cmd_and_response":         {"cmd": "dev/sys/fenc/{}", "auth_req": True}      # cipher, also the response will be encoded
+}
+
+SOCKET_COMMANDS = {
+
 }
 
 SYSTEM_COMMANDS = {
@@ -404,6 +413,5 @@ UNKNOWN_COMMANDS = {
 }
 
 
-ALL_COMMANDS = [APP_COMMANDS, BLOCK_COMMANDS, BUS_COMMANDS, CALENDAR_COMMANDS, CONFIG_COMMANDS, DEBUG_COMMANDS, EXTENSION_COMMANDS, FIDELIO_COMMANDS, FS_COMMANDS,
-                GATEWAY_COMMANDS, LAN_COMMANDS, PLC_COMMANDS, PUSH_NOTIFICATION_COMMANDS, SESSION_COMMANDS, SYSTEM_COMMANDS, TASK_COMMANDS, UNKNOWN_COMMANDS]
+ALL_COMMANDS = [APP_COMMANDS, BLOCK_COMMANDS, BUS_COMMANDS, CALENDAR_COMMANDS, CONFIG_COMMANDS, DEBUG_COMMANDS, EXTENSION_COMMANDS, FIDELIO_COMMANDS, FS_COMMANDS, GATEWAY_COMMANDS, LAN_COMMANDS, PLC_COMMANDS, PROGRAM_COMMANDS, PUSH_NOTIFICATION_COMMANDS, SESSION_COMMANDS, SOCKET_COMMANDS, SYSTEM_COMMANDS, TASK_COMMANDS, UNKNOWN_COMMANDS]
 

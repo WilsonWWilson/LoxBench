@@ -4,16 +4,20 @@ import time
 import secrets.credentials as credentials
 from http_status_codes import HttpStatusCode
 import os.path
+import posixpath
 import itertools
-from api.commands import ALL_COMMANDS
+from api.commands import ALL_COMMANDS, CONFIG_COMMANDS
+
+
+def _print_formatted_commands(cmds, ms_version=None, has_statuscode=False):
+    print("#### {} new commands ####".format(len(cmds)))
+    iter = ((c['cmd'], c['auth_req']) for c in cmds) if has_statuscode else zip(cmds, (True for _ in cmds))
+    for nc, needs_auth in iter:
+        min_vers = ', "min_vers": "{}"'.format(ms_version) if ms_version else ""
+        print('\t"": {{"cmd": "{}", "auth_req": {}{}}},'.format(nc, needs_auth, min_vers))
 
 
 def sync_api_list(source, ms_version=None):
-    path = pathlib.Path(source)
-    if path.exists():
-        with open(source, 'r') as f:
-            source = f.readlines()
-
     cmds = {}
     test = [cmds.update(cs) for cs in ALL_COMMANDS]
     # known_cmds = set([c['cmd'].replace('/{}', '').lower() for c in cmds.values()])
@@ -23,10 +27,7 @@ def sync_api_list(source, ms_version=None):
     new_cmds = sorted(help_cmds - known_cmds)
     not_listed_cmds = sorted(known_cmds - help_cmds)
 
-    print("#### {} new commands ####".format(len(new_cmds)))
-    for nc in new_cmds:
-        min_vers = ', "min_vers": "{}"'.format(ms_version) if ms_version else ""
-        print('\t"": {{"cmd": "{}", "auth_req": True{}}},'.format(nc, min_vers))
+    _print_formatted_commands(new_cmds, ms_version)
 
     print("\n#### {} unlisted commands ####".format(len(not_listed_cmds)))
     for uc in not_listed_cmds:
@@ -35,19 +36,25 @@ def sync_api_list(source, ms_version=None):
     return new_cmds, not_listed_cmds
 
 
-def check_api_fns(cmds, comm):
-    def _check_function(cmd, creds=None, auth_req=False):
-        res = comm.lox_get(comm.get_host(), cmd, creds, True)
-        if auth_req and creds is None:
-            print("'{}': claimed to need auth, but works without!".format(k))
-        if type(res) is HttpStatusCode:
-            print("'{}': got HttpStatusCode: {}".format(cmd, res))
-            code, res = res, '-'
-        else:
-            code, res, res_cmd = res    # unpack full response
-            print("'{} ({})'\t\t=> [{}] {}".format(cmd, res_cmd, code, res))
-        return code, res
+def _test_command(comm, cmd, creds=None, auth_req=False):
+    used_creds = creds if auth_req else None
+    res = comm.lox_get(comm.get_host(), cmd, used_creds, True)
+    if auth_req and creds is None:
+        print("'{}': claimed to need auth, but works without!".format(cmd))
+    if type(res) is HttpStatusCode:
+        print("'{}': got HttpStatusCode: {}".format(cmd, res))
+        code, res = res, '-'
+    else:
+        code, res, res_cmd = res    # unpack full response
+        if code == HttpStatusCode.UNAUTHORIZED and not auth_req:
+            return _test_command(comm, cmd, creds, True)
 
+        if code != HttpStatusCode.NOT_FOUND:
+            print("{:<50}\t\t=> [{}] {}".format(cmd, code, res))
+    return code, res, auth_req
+
+
+def check_api_fns(cmds, comm):
     if len(cmds) == 0:
         return
 
@@ -57,7 +64,7 @@ def check_api_fns(cmds, comm):
     if are_raw_cmds:
         for cmd in cmds:
             need_auth = []
-            http_code, res = _check_function(cmd, creds)
+            http_code, res = _test_command(comm, cmd, creds)
 
             if http_code == HttpStatusCode.UNAUTHORIZED:
                 need_auth.append(cmd)
@@ -77,17 +84,15 @@ def check_api_fns(cmds, comm):
                 continue
 
             # try:
-            http_code, _ = _check_function(cmd, user_creds, auth_req)
+            http_code, _ = _test_command(comm, cmd, user_creds, auth_req)
             # print("Checking {}   \t admin_only:{}    \t socket_only:{}".format(k, admin_only, socket_only))
             if not auth_req:
                 print("'{}': Authentication is required!".format(k))
-            _check_function(cmd, (credentials.user, credentials.password), auth_req=True)
+            _test_command(comm, cmd, (credentials.user, credentials.password), auth_req=True)
             # except:
             #     print("'{}': unhandled problem".format(k))
 
         time.sleep(0.2)
-
-cnt = 0
 
 
 def discover_api_fns(suggestions, comm):
@@ -97,38 +102,95 @@ def discover_api_fns(suggestions, comm):
     :param comm:
     :return:
     """
-    def _test_cmd(found_cmds, known_cmds, cmd):
-        global cnt
-        cnt += 1
-        if cmd in known_cmds:
-            code, res = HttpStatusCode.OK, "already known"
-        else:
-            code, res = comm.request(cmd, True)
-        if code != HttpStatusCode.NOT_FOUND:
-            found_cmds.append((cmd, res))
-        return code != HttpStatusCode.OK, res
-
     found_cmds = []
-    lvl1_pfxs = ['dev', 'gw', 'data']
+    lvl1_pfxs = ['jdev', 'dev', 'gw', 'data']
     lvl2_pfxs = ['', 'cfg', 'sps', 'sys', 'pns', 'debug']
     cmds = {}
     test = [cmds.update(cs) for cs in ALL_COMMANDS]
     known_cmds = set([re.sub("/{.*}", "", c['cmd'].lower()) for c in cmds.values()])
-    print("{} commands are already known prior to call!!".format(len(known_cmds)))
 
-    # TODO split suggestions with path to it's fragments and don't query resulting duplicates  (cmd: dev/testcmd vs guessed /dev/dev/testcmd
-
+    # TODO detect if response is a regular api (dev/jdev responses or a file like html, xml, etc.)
     paths = [('',)] + list(itertools.product(lvl1_pfxs, lvl2_pfxs))
+    suggestions = set(suggestions)      # deduplicate suggestions
+    num_requests = len(paths) * len(suggestions)
+    print("Testing {} commands".format(num_requests))
 
-    for cmd in set(suggestions):     # deduplicate suggestions
-        # clear '/' at beginning to be consistent
-        for c in [os.path.join(*p, cmd) for p in paths]:
-            if not cmd.startswith(pathlib.PurePath(c).anchor):
-                continue   # lvl1 prefix can't be nested
-            _test_cmd(found_cmds, known_cmds, c)
-        #
+    creds = credentials.user, credentials.password
+    unauth_counter = 0
+    redundant_entries = []
 
-    print(" --- {} requests ---".format(cnt))
-    print("\n### Found {} commands\n".format(len(found_cmds)))
-    # for c, res in found_cmds:
-    #     print("'{}' => {}".format(c, res))
+    try:
+        for cmd in suggestions:
+            print("----- Testing '{}' -------".format(cmd))
+            try:
+                # clear '/' at beginning to be consistent
+                # for c in [posixpath.join(*p, cmd) for p in paths]:
+                #     if str(c) in known_cmds:
+                #         continue
+                #     # if not cmd.startswith(c.anchor):
+                #     #     continue   # lvl1 prefix can't be nested
+                #     print("-> {:<40}".format(c), end="")
+                #     code, res = _test_cmd(found_cmds, c)
+                #     if code == HttpStatusCode.NOT_FOUND:
+                #         print('\r', end='')
+                #     else:
+                #         print("[{}] {}".format(code, res))
+                if cmd in known_cmds:
+                    redundant_entries.append(cmd)
+                    continue
+
+                code, res, needs_auth = _test_command(comm, cmd, creds)   # test suggestion as is
+                if code == HttpStatusCode.BLOCKED_TEMP:
+                    raise PermissionError("client was blocked temporarily")
+
+                if code != HttpStatusCode.NOT_FOUND and code != HttpStatusCode.UNAUTHORIZED:
+                    if cmd.replace('jdev', 'dev') in known_cmds:
+                        redundant_entries.append(cmd)
+                    else:
+                        found_cmds.append({"code": code, "cmd": cmd, "res": res, "auth_req": needs_auth})
+
+                frags = pathlib.PurePath(cmd).parts
+                if len(frags) >= 2 and frags[0] in lvl1_pfxs:
+                    continue
+
+                for pfx1 in lvl1_pfxs:
+                    if len(frags) >= 3 and frags[1] in lvl2_pfxs:
+                        continue
+                    for pfx2 in lvl2_pfxs:
+                        c = posixpath.join(pfx1, pfx2, cmd)
+                        code, res, needs_auth = _test_command(comm, c, creds)   # test suggestion as is
+                        if code != HttpStatusCode.NOT_FOUND and code != HttpStatusCode.UNAUTHORIZED:
+                            if cmd.replace('jdev', 'dev') in known_cmds:
+                                redundant_entries.append(c)
+                            else:
+                                found_cmds.append({"code": code, "cmd": c, "res": res, "auth_req": needs_auth})
+                        if code == HttpStatusCode.UNAUTHORIZED:
+                            unauth_counter += 1
+                            if unauth_counter == 9:
+                                # reset unauth counter in miniserver to prevent getting blocked!
+                                res = comm.lox_get(comm.get_host(), CONFIG_COMMANDS['get_api']['cmd'], (), True)
+                                unauth_counter = 0
+                                # print("Waiting a bit to reset block counter")
+                                # time.sleep(60)
+                        elif code == HttpStatusCode.MS_OUT_OF_SERVICE:
+                            # raise EnvironmentError("MS out of order")
+                            time.sleep(30)
+                        elif code == HttpStatusCode.BLOCKED_TEMP:
+                            raise PermissionError("Aborting, because client was blocked")
+            except EnvironmentError as exc:
+                print("skipped '{}' process because '{}'".format(cmd, exc))
+                break
+    except PermissionError as exc:
+        print("Stopped discovery process because '{}'".format(exc))
+
+    print("\n\n______________ found {} commands ______________".format(len(found_cmds)))
+    for cmd in found_cmds:
+        print("'{:<20}' => [{}] {}".format(cmd['cmd'], cmd['code'], cmd['res']))
+
+    if len(redundant_entries) > 0:
+        print("\n____________ following {} commands are already known ______________".format(len(redundant_entries)))
+        for cmd in redundant_entries:
+            print("\t{}".format(cmd))
+
+    print("\n")
+    _print_formatted_commands(found_cmds, has_statuscode=True)
