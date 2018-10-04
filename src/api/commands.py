@@ -12,7 +12,7 @@ TEST_COMMANDS = {
 APP_COMMANDS = {
     # "get_structure": {"cmd": "/data/LoxAPP3.json", "descr": "Strukturdatei für die Visualisierung", "auth_req": True, "admin_only": False},       # can't decode JSON
     "enable_status_updates": {"cmd": "dev/sps/enablebinstatusupdate", "auth_req": True},
-    "list_commands": {"cmd": "dec/sps/listcmds", "descr": "list commands recorded via the app", "auth_req": True}
+    "list_commands": {"cmd": "dev/sps/listcmds", "descr": "list commands recorded via the app", "auth_req": True}
 }
 
 BLOCK_COMMANDS = {
@@ -174,7 +174,7 @@ GATEWAY_COMMANDS = {
     "gw_get_structure_patch":       {"cmd": "gw/getstructurepatch/{%d}"},
     "gw_get_xml_stats":             {"cmd": "gw/getxmlstats"},
     "gw_get_sys_info":              {"cmd": "gw/getsysinfo/{}"},
-    "update_gw":                    {"cmd": "dev/sys/updategw", "auth_req": True},
+    "update_gw":                    {"cmd": "dev/sys/updategw/{:08d}", "auth_req": True},
     "gw_get_io":                    {"cmd": "dev/gateway/io", "auth_req": True, "min_vers": "10.0.9.24"},
 }
 
@@ -274,11 +274,11 @@ PLC_COMMANDS = {
     "get_ws_device":        {"cmd": "dev/sys/wsdevice", "auth_req": True},          # TODO det. purpose
     "get_ws_extension":     {"cmd": "dev/sys/wsextension", "auth_req": True},
     "is_secured":           {"cmd": "dev/sps/issecured/{}", "auth_req": True},     # TODO det purpose
-    "update_user_access_code":      {"cmd": "dev/sps/updateuseraccesscode", "auth_req": True, "min_vers": "10.0.9.24"},
+    "update_user_access_code":      {"cmd": "dev/sps/updateuseraccesscode/{}/{}", "auth_req": True, "min_vers": "10.0.9.24"},
     "update_user_pwd":              {"cmd": "dev/sps/updateuserpwd", "auth_req": True, "min_vers": "10.0.9.24"},
-    "update_user_pwd_hash":         {"cmd": "dev/sps/updateuserpwdh", "auth_req": True, "min_vers": "10.0.9.24"},
+    "update_user_pwd_hash":         {"cmd": "dev/sps/updateuserpwdh/{}/{}", "auth_req": True, "min_vers": "10.0.9.24"},
     "update_user_visu_pwd":         {"cmd": "dev/sps/updateuservisupwd", "auth_req": True, "min_vers": "10.0.9.24"},
-    "update_user_visu_pwd_hash":    {"cmd": "dev/sps/updateuservisupwdh", "auth_req": True, "min_vers": "10.0.9.24"},
+    "update_user_visu_pwd_hash":    {"cmd": "dev/sps/updateuservisupwdh/{}/{}", "auth_req": True, "min_vers": "10.0.9.24"},
     "client_ip":                    {"cmd": "dev/sps/clientip", "auth_req": True, "min_vers": "10.0.9.24"},
     "edit_user":                    {"cmd": "dev/sps/edituser", "auth_req": True, "min_vers": "10.0.9.24"},
     "fix_stats":                    {"cmd": "dev/sps/fixstats", "auth_req": True, "min_vers": "10.0.9.24"},
@@ -288,7 +288,6 @@ PLC_COMMANDS = {
     "save_weather_file":            {"cmd": "dev/sps/saveweatherfile", "auth_req": True, "min_vers": "10.0.9.24"},
     "set_external_resend_time":     {"cmd": "dev/sps/setexternalresendtime", "auth_req": True, "min_vers": "10.0.9.24"},
     "set_rating":                   {"cmd": "dev/sps/setrating", "auth_req": True, "min_vers": "10.0.9.24"},
-    "updat_user_access_code":       {"cmd": "jdev/sps/updateuseraccesscode/%s/%s", "auth_req": True, "min_vers": "10.0.9.24"},
 }
 
 
@@ -330,7 +329,10 @@ SESSION_COMMANDS = {
 }
 
 SOCKET_COMMANDS = {
-
+    "open_rfc_socket":              {"cmd": "ws/rfc6455", "auth_req": False},
+    "": {"cmd": "admin/index.asp", "auth_req": False},
+    "open_socket_x":                {"cmd": "wsx", "auth_req": True},
+    "open_secure_socket":           {"cmd": "wss/rfc6455", "auth_req": False},
 }
 
 SYSTEM_COMMANDS = {
@@ -363,6 +365,7 @@ SYSTEM_COMMANDS = {
     "start_dev_search":             {"cmd": "dev/sys/search", "auth_req": True},
     "get_dev_search_results":       {"cmd": "dev/sys/searchdata", "descr": "listet die Suchergebnisse", "admin_only": False},
     "get_status":                   {"cmd": "data/status", "descr": "zeigt Status von Miniserver und allen Extensions", "admin_only": False, "auth_req": True},
+    "get_statusxml":                {"cmd": "data/status.xml", "descr": "zeigt Status von Miniserver und allen Extensions", "admin_only": False, "auth_req": True},
     "show_stats":                   {"cmd": "stats", "descr": "zeigt die Statistiken", "admin_only": True, "auth_req": True},
     "get_weather_file":             {"cmd": "data/weatheru.xml", "descr": "zeigt die Wetterdaten (nur bei aktivem Wetteservice)", "admin_only": False, "auth_req": True},
     "test_sdcard":                  {"cmd": "dev/sys/sdtest", "descr": "Testet die SD Karte", "admin_only": True, "auth_req": True, "not_safe": True},
