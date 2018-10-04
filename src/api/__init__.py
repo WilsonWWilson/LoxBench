@@ -1,11 +1,8 @@
-import pathlib
 import re
 import time
 import secrets.credentials as credentials
 from http_status_codes import HttpStatusCode
-import os.path
 import posixpath
-import itertools
 from api.commands import ALL_COMMANDS, CONFIG_COMMANDS
 
 
@@ -18,12 +15,9 @@ def _print_formatted_commands(cmds, ms_version=None, has_statuscode=False):
 
 
 def sync_api_list(source, ms_version=None):
-    cmds = {}
-    test = [cmds.update(cs) for cs in ALL_COMMANDS]
-    # known_cmds = set([c['cmd'].replace('/{}', '').lower() for c in cmds.values()])
-    known_cmds = set([re.sub("/{.*}", "", c['cmd'].lower()) for c in cmds.values()])
+    known_cmds = set({re.sub("/{.*}", "", props['cmd'].lower())      # merge all known commands to a set and remove placeholders
+                      for grp in ALL_COMMANDS for props in grp.values()})
     help_cmds = set([c.replace(',', '').strip() for c in source])
-
     new_cmds = sorted(help_cmds - known_cmds)
     not_listed_cmds = sorted(known_cmds - help_cmds)
 
@@ -32,7 +26,6 @@ def sync_api_list(source, ms_version=None):
     print("\n#### {} unlisted commands ####".format(len(not_listed_cmds)))
     for uc in not_listed_cmds:
         print("\t{}".format(uc))
-
     return new_cmds, not_listed_cmds
 
 

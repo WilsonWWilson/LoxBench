@@ -52,6 +52,7 @@ class LoxComm:
         self._token = None
         self._user = user
         self._pwd = pwd
+        self._pubkey = None
         self._request_queue = asyncio.Queue()
 
     @staticmethod
@@ -88,8 +89,9 @@ class LoxComm:
         else:
             return content
 
-
     async def _get_public_key(self):
+        if self._pubkey:
+            return self._pubkey
         pub_key_pem = self.lox_get(self._host, CMD.GET_PUBLIC_KEY)
         # format return by the Miniserver is not a valid PEM format:
         pub_key_pem = re.sub(r'^(-+BEGIN.*?-+)(\w)', r'\1\n\2', pub_key_pem)        # BEGIN and END must be on separate lines
@@ -98,7 +100,23 @@ class LoxComm:
         pub_key = serialization.load_pem_public_key(
             pub_key_pem.encode('utf-8'),
             backend=default_backend())
+        self._pubkey = pub_key
         return pub_key
+
+    def get_public_key(self):
+        if self._pubkey:
+            return self._pubkey
+        pub_key_pem = self.lox_get(self._host, CMD.GET_PUBLIC_KEY)
+        # format return by the Miniserver is not a valid PEM format:
+        pub_key_pem = re.sub(r'^(-+BEGIN.*?-+)(\w)', r'\1\n\2', pub_key_pem)        # BEGIN and END must be on separate lines
+        pub_key_pem = re.sub(r'(\w)(-+END.*?-+)', r'\1\n\2', pub_key_pem)
+        pub_key_pem = pub_key_pem.replace("CERTIFICATE", "PUBLIC KEY")              # it's not a certificate but a public key
+        pub_key = serialization.load_pem_public_key(
+            pub_key_pem.encode('utf-8'),
+            backend=default_backend())
+        self._pubkey = pub_key
+        return pub_key
+
 
     @staticmethod
     def _generate_session_key(pub_key, aes_key):
@@ -145,7 +163,7 @@ class LoxComm:
 
         # TODO test what happens if info is not URLencoded
         # TODO play around with UUID
-        cmd = CMD.GET_TOKEN.format(hash=cred_hash, user=user, permission=Permission.WEB, uuid="0a8c7351-00ac-1e18-ffff112233445566", info="LoxBench")
+        cmd = self._encrypt_cmd(CMD.GET_TOKEN.format(hash=cred_hash, user=user, permission=Permission.WEB, uuid="0a8c7351-00ac-1e18-ffff112233445566", info="LoxBench"))
         await ws.send(cmd)
         code, token, _ = await self._get_ws_response(ws, True)
         if code == 200:
@@ -160,7 +178,7 @@ class LoxComm:
 
     async def lox_comm(self, credentials):
         session_key = await self._authenticate()
-        async with websockets.connect('ws://{}/ws/rfc6455'.format(self._host)) as ws:
+        async with websockets.connect('ws://{}/ws/rfc6455'.format(self._host), subprotocols=['remotecontrol']) as ws:
             await ws.send(CMD.EXCHANGE_KEY.format(session_key))
             res = await self._get_ws_response(ws)       # TODO what to do with the session key?
             if self._token:
@@ -203,16 +221,14 @@ class LoxComm:
     def request(self, cmd, full_response=False):
         return self.lox_get(self._host, cmd, (self._user, self._pwd), full_response)
 
-    def get_public_key(self):
-        pub_key_pem = self.lox_get(self._host, CMD.GET_PUBLIC_KEY)
-        # format return by the Miniserver is not a valid PEM format:
-        pub_key_pem = re.sub(r'^(-+BEGIN.*?-+)(\w)', r'\1\n\2', pub_key_pem)        # BEGIN and END must be on separate lines
-        pub_key_pem = re.sub(r'(\w)(-+END.*?-+)', r'\1\n\2', pub_key_pem)
-        pub_key_pem = pub_key_pem.replace("CERTIFICATE", "PUBLIC KEY")              # it's not a certificate but a public key
-        pub_key = serialization.load_pem_public_key(
-            pub_key_pem.encode('utf-8'),
-            backend=default_backend())
-        return pub_key
+    async def _encrypt_cmd(self, cmd):
+        salt = b'\x04\x02'
+        ms_key = await self._get_public_key()
+        rsa_ct = ms_key.encrypt(
+            # aesKey + ':' + aesIV,
+            padding=PKCS1v15()
+        )
+        return rsa_ct
 
     def encrypt_command(self, command, pub_key):
         aes_iv = os.urandom(16)

@@ -55,8 +55,9 @@ def main():
     if args.connect:
         comm = LoxComm(args.host, args.user, args.pwd)
         # comm = LoxComm("demominiserver.loxone.com:7779")
+        comm.connect()
 
-    source = _get_line(args.input_file)
+    source = _get_line(args.input_file) if args.input_file else []
     if args.sync_api:
         new_cmds, unknown_cmds = sync_api_list(source, args.ms_version)
 
