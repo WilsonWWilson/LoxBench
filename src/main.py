@@ -1,9 +1,7 @@
-from api import sync_api_list, check_api_fns
-from comm import LoxComm, DummyComm
+from communication.comm import LoxComm
 from api import sync_api_list, discover_api_fns
 from update_analyzer import unpacker
 from config_analyzer.loxcc_parser import uncompress_loxcc#, decompress_loxcc
-import asyncio
 import argparse
 import pathlib
 
