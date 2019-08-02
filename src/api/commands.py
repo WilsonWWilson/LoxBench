@@ -43,6 +43,7 @@ CONFIG_COMMANDS = {
     "get_api":              	{"cmd": "dev/cfg/api", "descr": ""},
     "get_apikey":           	{"cmd": "dev/cfg/apikey", "descr": ""},
     "get_mac":              	{"cmd": "dev/cfg/mac", "descr": "Retrieve mac (separated by ':')", "admin_only": False},
+    "get_mac_dash":             {"cmd": "dev/sys/mac", "auth_req": True, "descr": "Retrieve mac (separated by '-')"},
     "get_firmware_version_dot": {"cmd": "dev/cfg/version", "descr": "Get firmware version (dotted notation)", "admin_only": False, "auth_req": True},
     "get_firmware_version": 	{"cmd": "dev/sys/version", "descr": "Get firmware version (no separator)", "admin_only": False, "auth_req": True},
     "get_firmware_date":    	{"cmd": "dev/cfg/versiondate", "descr": "Erstellungsdatum der Firmware holen", "admin_only": False, "auth_req": True},
@@ -68,7 +69,7 @@ CONFIG_COMMANDS = {
     "logserver":                {"cmd": "dev/cfg/logserver", "auth_req": True},        # TODO determine purpose
     "get_log_level":            {"cmd": "dev/cfg/loglevel", "auth_req": True, "min_vers": "10.0.9.24"},
     "get_update_level":         {"cmd": "dev/cfg/updatelevel", "min_vers": "9.0", "descr": "", "auth_req": True},         # interacts with updatecheck.xml?
-    "cvt_time":                 {"cmd": "dev/cfg/cvttime/{}", "auth_req": True, "descr": "Converts the given number of seconds into date time. The base for the conversion is 2009-01-01", "admin_only": True},     # admin only?
+    "convert_time":                 {"cmd": "dev/cfg/cvttime/{}", "auth_req": True, "descr": "Converts the given number of seconds into date time. The base for the conversion is 2009-01-01", "admin_only": True},     # admin only?
 }
 
 
@@ -76,7 +77,7 @@ DEBUG_COMMANDS = {
     "dbg_config": 			{"cmd": "dev/debug/config", "auth_req": True},
     "dbg_cycle": 			{"cmd": "dev/debug/cycle", "auth_req": True},
     "dbg_free": 			{"cmd": "dev/debug/free", "auth_req": True},
-    "dbg_fs": 		    	{"cmd": "dev/debug/fs", "auth_req": True},
+    "dbg_fs": 		    	{"cmd": "dev/debug/fs", "auth_req": True},      # lists all files on FS as log messages (logserver)
     "dbg_gateway": 			{"cmd": "dev/debug/gateway", "auth_req": True},
     "dbg_httpsockets":	    {"cmd": "dev/debug/httpsockets", "auth_req": True},
     "dbg_inmem": 			{"cmd": "dev/debug/inmem", "auth_req": True},
@@ -214,7 +215,7 @@ PLC_COMMANDS = {
     "create_user":          {"cmd": "dev/sps/createuser", "auth_req": True},
     "delete_user":          {"cmd": "dev/sps/deleteuser", "auth_req": True},
     "dis_stats":            {"cmd": "dev/sps/disstats", "auth_req": True},              # TODO determine purpose (disable stats?)
-    "dump":                 {"cmd": "dev/sps/dump", "auth_req": True},
+    "dump":                 {"cmd": "dev/sps/dump", "auth_req": True},                  # dumps control objects in program on log stream
     "event":                {"cmd": "dev/sps/event", "auth_req": True},             # not working?
     "event_monitor":        {"cmd": "dev/sps/eventmonitor", "auth_req": True},
     "generate_stats":       {"cmd": "dev/sps/genstats", "auth_req": True, "descr": "Generate statistics for testing purposes"},
@@ -222,7 +223,6 @@ PLC_COMMANDS = {
     "get_group_users":      {"cmd": "dev/sps/getgroupusers", "auth_req": True, "descr": "Retrieve list of groups with all its users"},
     "get_stats":            {"cmd": "dev/sps/getstats", "auth_req": True},
     "get_stats_date":       {"cmd": "dev/sps/getstatsdate", "auth_req": True},
-    "get_mac_dash":         {"cmd": "dev/sys/mac", "auth_req": True, "descr": "Retrieve mac (separated by '-')"},
     "get_user_list":        {"cmd": "dev/sps/getuserlist", "auth_req": True, "descr": "Retrieve list of all users"},
     "list_commands":        {"cmd": "dev/sps/listcmds", "auth_req": True},
     "log":                  {"cmd": "dev/sps/log/{str}", "descr": "log given string in Loxone Monitor", "params": {"str": "the string, which will be extracted and displayed in Loxone Monitor"}, "auth_req": True},
@@ -283,7 +283,6 @@ PLC_COMMANDS = {
     "edit_user":                    {"cmd": "dev/sps/edituser", "auth_req": True, "min_vers": "10.0.9.24"},
     "fix_stats":                    {"cmd": "dev/sps/fixstats", "auth_req": True, "min_vers": "10.0.9.24"},
     "get_control_info":             {"cmd": "dev/sps/getcontrolinfo", "auth_req": True, "min_vers": "10.0.9.24"},
-    "get_program_info":             {"cmd": "dev/sps/programinfo", "auth_req": True, "min_vers": "10.0.9.24"},
     "reload_webinterface":          {"cmd": "dev/sps/reloadwebinterface", "auth_req": True, "min_vers": "10.0.9.24"},
     "save_weather_file":            {"cmd": "dev/sps/saveweatherfile", "auth_req": True, "min_vers": "10.0.9.24"},
     "set_external_resend_time":     {"cmd": "dev/sps/setexternalresendtime", "auth_req": True, "min_vers": "10.0.9.24"},

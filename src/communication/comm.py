@@ -12,7 +12,9 @@ import json
 import binascii
 from communication.loxsocket import LoxSocket
 from http_status_codes import HttpStatusCode
+import communication.pyloxone as pyloxone
 # from api import SESSION_COMMANDS as CMD
+from communication.LoxMonitor import LoxMonitor
 
 
 TOKEN_CFG_VERSION = "8.4.5.10"
@@ -25,6 +27,7 @@ class CMD:
     GET_PUBLIC_KEY = "jdev/sys/getPublicKey"
     GET_TOKEN = "jdev/sys/gettoken/{hash}/{user}/{permission}/{uuid}/{info}"
     FENC = "jdev/sys/fenc/{}?sk={}"
+    ENC_TEST = "jdev/sys/fenc/test?sk={}"
     GET_SALT_AND_KEY = "jdev/sys/getkey2/{}"
     EXCHANGE_KEY = "jdev/sys/keyexchange/{}"
     AUTH_WITH_TOKEN = "authwithoken/{}/{}"
@@ -47,7 +50,12 @@ class Permission:
 
 class LoxComm:
     def __init__(self, host, user, pwd, socket=None):
-        self._host = host
+        if ":" in host:
+            self._host, p = host.split(":")
+            self._port = int(p)
+        else:
+            self._host = host
+            self._port = 80
         self._token = None
         self._user = user
         self._pwd = pwd
@@ -118,18 +126,19 @@ class LoxComm:
         return pub_key
 
     @staticmethod
-    def generate_session_key(pub_key, aes_key, aes_iv=None):
+    def generate_session_key(pub_key, aes_key=None, aes_iv=None):
         if type(aes_iv) == str:
             aes_iv = aes_iv.encode('utf-8')
         elif aes_iv is None:
             aes_iv = os.urandom(16)
-        # aes_iv = binascii.unhexlify(aes_iv) if aes_iv else os.urandom(16)
-        # aes_key = binascii.unhexlify(aes_key)
 
-        if type(aes_iv) == str:
-            aes_key = aes_iv.encode('utf-8')
+        if type(aes_key) == str:
+            aes_key = aes_key.encode('utf-8')
         elif aes_key is None:
             aes_key = os.urandom(32)
+
+        aes_key = binascii.hexlify(aes_key)
+        aes_iv = binascii.hexlify(aes_iv)
 
         ct = pub_key.encrypt(
             aes_key + b':' + aes_iv,
@@ -151,6 +160,19 @@ class LoxComm:
     #         else:
     #             return res['value']
 
+    @staticmethod
+    def create_credentials_hash(user, pwd, key, salt):
+        digest = hashes.Hash(hashes.SHA1(), backend=default_backend())
+        digest.update("{}:{}".format(pwd, salt).encode('utf-8'))
+        pwd_hash = binascii.hexlify(digest.finalize()).upper().decode('utf-8')
+
+        key = binascii.unhexlify(key)
+        h = hmac.HMAC(key, hashes.SHA1(), backend=default_backend())
+
+        h.update("{}:{}".format(user, pwd_hash).encode('utf-8'))
+        cred_hash = binascii.hexlify(h.finalize()).decode('utf-8')
+        return cred_hash
+
     async def _acquire_token(self, credentials, ws=None):
         user, pwd = credentials
         if ws:
@@ -158,21 +180,13 @@ class LoxComm:
             res = await self.send(ws)
         else:
             res = self.lox_get(self._host, CMD.GET_SALT_AND_KEY.format(user))
-
-        digest = hashes.Hash(hashes.SHA1(), backend=default_backend())
-        salt = res["salt"]
-        digest.update("{}:{}".format(pwd, salt).encode('utf-8'))
-        pwd_hash = binascii.hexlify(digest.finalize()).upper().decode('utf-8')
-
-        key = binascii.unhexlify(res['key'])
-        h = hmac.HMAC(key, hashes.SHA1(), backend=default_backend())
-        h.update("{}:{}".format(user, pwd_hash).encode('utf-8'))
-        cred_hash = binascii.hexlify(h.finalize()).decode('utf-8')
+        cred_hash = self.create_credentials_hash(user, pwd, res['key'], res['salt'])
 
         # TODO test what happens if info is not URLencoded
         # TODO play around with UUID
         cmd = CMD.GET_TOKEN.format(hash=cred_hash, user=user, permission=Permission.WEB, uuid="0a8c7351-00ac-1e18-ffff112233445566", info="LoxBench")
         enc_cmd = await self.encrypt_command(cmd)
+        print("MINE:\ncommand: {}\n enc_cmd: {}".format(cmd, enc_cmd))
         if ws:
             await ws.send(enc_cmd)
             code, token, _ = await self._get_ws_response(ws, True)
@@ -182,7 +196,6 @@ class LoxComm:
             self._token = token
             return token
         else:
-            a = 5
             return None
 
     async def authenticate_with_token(self, ws):
@@ -194,11 +207,27 @@ class LoxComm:
     def connect(self, credentials=None):
         if credentials is None:
             credentials = (self._user, self._pwd)
-        asyncio.get_event_loop().run_until_complete(self.lox_comm(credentials))
+        # asyncio.get_event_loop().run_until_complete(self.lox_comm(credentials))
+        loop = asyncio.get_event_loop()
+        listen = loop.create_datagram_endpoint(
+            LoxMonitor, local_addr=('0.0.0.0', 7777))
+        transport, protocol = loop.run_until_complete(listen)
+        try:
+            loop.run_forever()
+        except KeyboardInterrupt:
+            pass
+        transport.close()
+        loop.close()
 
     async def lox_comm(self, credentials):
+        # pyws = pyloxone.LoxWs(credentials[0], credentials[1], host=self._host, port=self._port)
+        # await pyws.start()
+        # res = await pyws.async_init()
+
         # pub_key = await self._get_public_key()
         # sk = self.generate_session_key(pub_key, "ThisIsASecretPasswordWith32Bytes")
+        sk = self.generate_session_key(await self._get_public_key(), "AA", "BB")
+        res = self.lox_get(self._host, CMD.ENC_TEST.format(sk), credentials)
         if not self._token:
             token = await self._acquire_token(credentials)
             if token:
